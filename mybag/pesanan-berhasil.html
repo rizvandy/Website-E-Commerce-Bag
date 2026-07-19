@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Pesanan Anda berhasil diproses! Terima kasih telah berbelanja di MyBag.">
+<title>MyBag — Pesanan Berhasil</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="css/global.css" rel="stylesheet">
+<style>
+.success-section{padding:8.5rem 0 5rem;min-height:100vh;display:flex;align-items:center;}
+.success-wrap{max-width:560px;margin:0 auto;text-align:center;}
+
+.success-icon{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg, var(--primary-light) 0%, rgba(79,70,229,0.15) 100%);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:2.8rem;color:var(--primary);
+  animation:successPop .6s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes successPop{0%{transform:scale(0);opacity:0;}100%{transform:scale(1);opacity:1;}}
+
+.success-title{font-weight:800;font-size:2.4rem;margin-bottom:0.5rem;letter-spacing:-0.02em;}
+.success-sub{color:var(--text-secondary);margin-bottom:2rem;font-size:1.05rem;}
+
+.confetti-particle{position:fixed;width:8px;height:8px;border-radius:50%;z-index:1000;pointer-events:none;animation:confettiFall 2.5s ease-in forwards;}
+@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg);}100%{opacity:0;transform:translateY(100vh) rotate(720deg);}}
+
+.invoice-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:2rem;text-align:left;margin-bottom:2rem;animation:slideUp .5s ease .3s both;}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+.invoice-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1.5px solid var(--border);}
+.invoice-header h5{font-weight:700;margin:0;}
+.invoice-status{background:rgba(16,185,129,0.1);color:var(--success);padding:0.3rem 0.8rem;border-radius:50px;font-size:0.8rem;font-weight:600;}
+
+.invoice-row{display:flex;justify-content:space-between;padding:0.6rem 0;color:var(--text-secondary);font-size:0.95rem;}
+.invoice-row span:last-child{color:var(--text);font-weight:500;}
+.invoice-products{margin:1rem 0;padding:1rem 0;border-top:1px dashed var(--border);border-bottom:1px dashed var(--border);}
+.invoice-product-row{display:flex;justify-content:space-between;font-size:0.9rem;padding:0.5rem 0;color:var(--text-secondary);}
+.invoice-product-row span:last-child{font-weight:500;color:var(--text);}
+.invoice-total{display:flex;justify-content:space-between;font-weight:700;font-size:1.2rem;color:var(--primary);padding-top:1rem;}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div id="navbar"></div>
+
+<!-- Success -->
+<section class="success-section">
+  <div class="container">
+    <div class="success-wrap">
+      <div class="success-icon"><i class="bi bi-check-lg"></i></div>
+      <h1 class="success-title reveal">Thank You!</h1>
+      <p class="success-sub reveal">Pesanan Anda telah berhasil diproses.</p>
+
+      <div class="invoice-card" id="invoiceCard">
+        <div class="invoice-header">
+          <h5>Invoice</h5>
+          <span class="invoice-status"><i class="bi bi-check-circle me-1"></i>Paid</span>
+        </div>
+        <div class="invoice-row"><span>No. Pesanan</span><span id="orderNumber">#MYB-20260714-001</span></div>
+        <div class="invoice-row"><span>Tanggal</span><span id="orderDate"></span></div>
+        <div class="invoice-products" id="orderProducts">
+          <!-- Dynamic products -->
+        </div>
+        <div class="invoice-row"><span>Ongkos Kirim</span><span>Rp 25.000</span></div>
+        <div class="invoice-total"><span>Total Pembayaran</span><span id="orderTotal">Rp 0</span></div>
+      </div>
+
+      <div class="d-flex gap-3 justify-content-center flex-wrap" style="animation:slideUp .5s ease .5s both;">
+        <a href="beranda.html" class="btn-main">Back to Home <i class="bi bi-house ms-1"></i></a>
+        <a href="produk.html" class="btn-outline-main">Continue Shopping <i class="bi bi-arrow-right ms-1"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div id="footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+<script>
+// Generate confetti
+function launchConfetti(){
+  var colors = ['#4F46E5','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899'];
+  for(var i=0;i<40;i++){
+    var particle = document.createElement('div');
+    particle.className = 'confetti-particle';
+    particle.style.left = Math.random()*100 + 'vw';
+    particle.style.top = '-10px';
+    particle.style.background = colors[Math.floor(Math.random()*colors.length)];
+    particle.style.animationDelay = Math.random()*1.5 + 's';
+    particle.style.animationDuration = (2 + Math.random()*2) + 's';
+    var size = 6 + Math.random()*6;
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+    particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    document.body.appendChild(particle);
+    setTimeout(function(el){ el.remove(); }.bind(null, particle), 4500);
+  }
+}
+
+// Build dynamic invoice from cart
+document.addEventListener('DOMContentLoaded', function(){
+  var cart = CartStore.get();
+  var SHIPPING = 25000;
+
+  // Set order number
+  var now = new Date();
+  var orderNum = '#MYB-' + now.getFullYear() +
+    String(now.getMonth()+1).padStart(2,'0') +
+    String(now.getDate()).padStart(2,'0') + '-' +
+    String(Math.floor(Math.random()*999)+1).padStart(3,'0');
+  document.getElementById('orderNumber').textContent = orderNum;
+
+  // Set date
+  var months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  document.getElementById('orderDate').textContent = now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
+
+  // Render products
+  var productsEl = document.getElementById('orderProducts');
+  if(cart.length > 0){
+    var subtotal = 0;
+    productsEl.innerHTML = cart.map(function(item){
+      var lineTotal = item.price * item.qty;
+      subtotal += lineTotal;
+      return '<div class="invoice-product-row">' +
+        '<span>' + item.name + ' &times; ' + item.qty + '</span>' +
+        '<span>' + formatRupiah(lineTotal) + '</span>' +
+      '</div>';
+    }).join('');
+    document.getElementById('orderTotal').textContent = formatRupiah(subtotal + SHIPPING);
+  } else {
+    productsEl.innerHTML = '<p style="color:var(--text-secondary);text-align:center;padding:1rem 0;font-size:0.9rem;"><i class="bi bi-info-circle me-1"></i>Tidak ada item dalam pesanan.</p>';
+    document.getElementById('orderTotal').textContent = 'Rp 0';
+  }
+
+  // Clear cart after showing invoice
+  CartStore.clear();
+
+  // Launch confetti
+  setTimeout(launchConfetti, 500);
+});
+</script>
+</body>
+</html>

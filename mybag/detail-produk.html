@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Detail produk tas kulit premium MyBag. Lihat spesifikasi, harga, dan tambahkan ke keranjang.">
+<title>MyBag — Detail Produk</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="css/global.css" rel="stylesheet">
+<style>
+.detail-section{padding:7rem 0 4rem;}
+
+.product-gallery{position:relative;border-radius:20px;overflow:hidden;background:#fff;border:1px solid var(--border);width:100%;aspect-ratio:3 / 4;height:auto;}
+.product-gallery img{width:100%;height:100%;object-fit:cover;filter:contrast(1.06) brightness(0.98) saturate(1.02);transition:transform .5s ease;}
+.product-gallery:hover img{transform:scale(1.04);}
+.gallery-badge{position:absolute;top:16px;left:16px;background:var(--primary);color:#fff;padding:0.35rem 0.9rem;border-radius:50px;font-size:0.75rem;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;}
+
+.product-info{padding:0.5rem 0;}
+.product-info .cat-label{display:inline-block;background:var(--primary-light);color:var(--primary);padding:0.3rem 0.8rem;border-radius:50px;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem;}
+.product-info h1{font-weight:800;font-size:2rem;letter-spacing:-0.02em;margin-bottom:0.5rem;}
+.product-info .price-tag{font-size:1.6rem;font-weight:800;color:var(--primary);margin-bottom:1.5rem;}
+.product-info .desc{color:var(--text-secondary);line-height:1.8;margin-bottom:2rem;font-size:0.98rem;}
+
+.qty-selector{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:50px;overflow:hidden;width:fit-content;}
+.qty-selector button{background:#fff;border:none;width:42px;height:42px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all .3s ease;color:var(--text);font-family:'Inter',sans-serif;}
+.qty-selector button:hover{background:var(--primary-light);color:var(--primary);}
+.qty-selector span{width:50px;text-align:center;font-weight:700;font-size:1.05rem;}
+
+.action-buttons{display:flex;gap:0.8rem;margin-top:1.5rem;flex-wrap:wrap;}
+.action-buttons .btn-main{flex:1;justify-content:center;min-width:200px;}
+.wishlist-btn{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;transition:all .3s cubic-bezier(0.4,0,0.2,1);color:var(--text-secondary);flex-shrink:0;}
+.wishlist-btn:hover,.wishlist-btn.active{color:#EF4444;border-color:#EF4444;background:rgba(239,68,68,0.05);transform:scale(1.08);}
+
+.feature-list{list-style:none;padding:0;margin:2rem 0 0;}
+.feature-list li{display:flex;align-items:center;gap:0.8rem;padding:0.7rem 0;border-bottom:1px solid var(--border);font-size:0.92rem;}
+.feature-list li:last-child{border-bottom:none;}
+.feature-list li i{color:var(--primary);font-size:1.1rem;width:20px;}
+
+.related-section{padding:4rem 0 5rem;}
+
+@media (max-width:991px){
+  .product-gallery img{height:350px;}
+  .product-info h1{font-size:1.6rem;}
+}
+@media (max-width:576px){
+  .product-gallery img{height:280px;}
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div id="navbar"></div>
+
+<!-- Breadcrumb -->
+<section style="padding-top:5.5rem;">
+  <div class="container">
+    <nav aria-label="breadcrumb" style="padding:1rem 0;">
+      <ol class="breadcrumb mb-0" style="font-size:0.9rem;">
+        <li class="breadcrumb-item"><a href="beranda.html" style="color:var(--text-secondary);">Beranda</a></li>
+        <li class="breadcrumb-item"><a href="produk.html" style="color:var(--text-secondary);">Produk</a></li>
+        <li class="breadcrumb-item active" id="breadcrumbName" aria-current="page" style="color:var(--primary);font-weight:500;">Detail</li>
+      </ol>
+    </nav>
+  </div>
+</section>
+
+<!-- Product Detail -->
+<section class="detail-section" style="padding-top:0;">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-6 reveal-left">
+        <div class="product-gallery">
+          <span class="gallery-badge" id="productBadge">Premium</span>
+          <img id="productImage" src="" alt="" loading="lazy">
+        </div>
+      </div>
+      <div class="col-lg-6 reveal-right">
+        <div class="product-info">
+          <span class="cat-label" id="productCat"></span>
+          <h1 id="productName"></h1>
+          <div class="price-tag" id="productPrice"></div>
+          <p class="desc" id="productDesc"></p>
+
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span style="font-weight:600;font-size:0.95rem;">Jumlah:</span>
+            <div class="qty-selector">
+              <button id="qtyMinus" aria-label="Kurangi">−</button>
+              <span id="qtyValue">1</span>
+              <button id="qtyPlus" aria-label="Tambah">+</button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn-main" id="addToCartBtn">
+              <i class="bi bi-bag-plus"></i> Add to Cart
+            </button>
+            <button class="wishlist-btn" id="wishlistBtn" aria-label="Add to Wishlist">
+              <i class="bi bi-heart"></i>
+            </button>
+          </div>
+
+          <ul class="feature-list">
+            <li><i class="bi bi-check-circle-fill"></i> Kulit grade premium 100% asli</li>
+            <li><i class="bi bi-check-circle-fill"></i> Jahitan tangan oleh pengrajin berpengalaman</li>
+            <li><i class="bi bi-check-circle-fill"></i> Garansi kualitas 2 tahun</li>
+            <li><i class="bi bi-truck"></i> Gratis ongkir untuk pembelian di atas Rp 2.000.000</li>
+            <li><i class="bi bi-arrow-counterclockwise"></i> 30 hari pengembalian mudah</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Related Products -->
+<section class="related-section section-bg">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <p class="eyebrow">Produk Lainnya</p>
+      <h2 class="title">You May Also Like</h2>
+    </div>
+    <div class="row g-4" id="relatedGrid"></div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div id="footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+<script>
+var qty = 1;
+var currentProduct = null;
+
+// Get product ID from URL
+var urlParams = new URLSearchParams(window.location.search);
+var productId = Number(urlParams.get('id')) || 1;
+
+document.addEventListener('DOMContentLoaded', function(){
+  // Find product
+  currentProduct = PRODUCTS.find(function(p){ return p.id === productId; });
+  if(!currentProduct) currentProduct = PRODUCTS[0];
+
+  // Populate detail
+  document.getElementById('productImage').src = currentProduct.img.replace('w=500', 'w=800');
+  document.getElementById('productImage').alt = currentProduct.name;
+  document.getElementById('productName').textContent = currentProduct.name;
+  document.getElementById('productPrice').textContent = formatRupiah(currentProduct.price);
+  document.getElementById('productDesc').textContent = currentProduct.desc;
+  document.getElementById('productCat').textContent = currentProduct.cat;
+  document.getElementById('breadcrumbName').textContent = currentProduct.name;
+  document.getElementById('productBadge').textContent = currentProduct.cat;
+  document.title = 'MyBag — ' + currentProduct.name;
+
+  // Set wishlist button state
+  var wishlistBtn = document.getElementById('wishlistBtn');
+  if(wishlistBtn && WishlistStore.has(currentProduct.id)){
+    wishlistBtn.classList.add('active');
+    wishlistBtn.querySelector('i').className = 'bi bi-heart-fill';
+  }
+
+  // Related products (same category, exclude current)
+  var related = PRODUCTS.filter(function(p){
+    return p.id !== currentProduct.id;
+  }).slice(0, 4);
+
+  var relatedGrid = document.getElementById('relatedGrid');
+  related.forEach(function(p, i){
+    var col = document.createElement('div');
+    col.className = 'col-lg-3 col-md-6 reveal reveal-delay-' + (i + 1);
+    col.innerHTML =
+      '<div class="product-card">' +
+        '<a href="detail-produk.html?id=' + p.id + '">' +
+          '<div class="img-wrap"><img src="' + p.img + '" alt="' + p.name + '" loading="lazy"></div>' +
+        '</a>' +
+        '<div class="body">' +
+          '<p class="cat-tag mb-1">' + p.cat + '</p>' +
+          '<h6 class="fw-semibold mb-1">' + p.name + '</h6>' +
+          '<p class="price mb-2">' + formatRupiah(p.price) + '</p>' +
+          '<button class="btn-main w-100 justify-content-center" data-id="' + p.id + '">Add <i class="bi bi-bag-plus"></i></button>' +
+        '</div>' +
+      '</div>';
+    relatedGrid.appendChild(col);
+  });
+
+  setTimeout(initScrollReveal, 150);
+});
+
+// Quantity controls
+document.getElementById('qtyMinus').addEventListener('click', function(){
+  if(qty > 1){
+    qty--;
+    document.getElementById('qtyValue').textContent = qty;
+  }
+});
+
+document.getElementById('qtyPlus').addEventListener('click', function(){
+  if(qty < 10){
+    qty++;
+    document.getElementById('qtyValue').textContent = qty;
+  }
+});
+
+// Add to Cart with proper quantity
+document.getElementById('addToCartBtn').addEventListener('click', function(){
+  if(!currentProduct) return;
+  var cart = CartStore.get();
+  var existing = cart.find(function(item){ return item.id === currentProduct.id; });
+  if(existing){
+    existing.qty += qty;
+  } else {
+    cart.push({ id: currentProduct.id, name: currentProduct.name, price: currentProduct.price, img: currentProduct.img, qty: qty });
+  }
+  CartStore.save(cart);
+  showToast(currentProduct.name + ' (' + qty + 'x) ditambahkan ke keranjang!', 'bi-bag-check-fill', 'success');
+  qty = 1;
+  document.getElementById('qtyValue').textContent = '1';
+});
+
+// Wishlist toggle
+document.getElementById('wishlistBtn').addEventListener('click', function(){
+  if(!currentProduct) return;
+  var added = WishlistStore.toggle(currentProduct);
+  var icon = this.querySelector('i');
+  if(added){
+    this.classList.add('active');
+    icon.className = 'bi bi-heart-fill';
+    showToast(currentProduct.name + ' ditambahkan ke wishlist!', 'bi-heart-fill', 'success');
+  } else {
+    this.classList.remove('active');
+    icon.className = 'bi bi-heart';
+    showToast(currentProduct.name + ' dihapus dari wishlist!', 'bi-heart', 'error');
+  }
+});
+
+// Related product add to cart (event delegation)
+document.getElementById('relatedGrid').addEventListener('click', function(e){
+  var btn = e.target.closest('button[data-id]');
+  if(!btn) return;
+  var id = Number(btn.dataset.id);
+  var product = PRODUCTS.find(function(p){ return p.id === id; });
+  if(product) CartStore.add(product);
+});
+</script>
+</body>
+</html>

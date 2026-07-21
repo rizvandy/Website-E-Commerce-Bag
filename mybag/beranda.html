@@ -124,13 +124,17 @@ document.addEventListener('DOMContentLoaded', function() {
     col.innerHTML =
       '<div class="product-card">' +
         '<a href="detail-produk.html?id=' + p.id + '">' +
-          '<div class="img-wrap"><img src="' + p.img + '" alt="' + p.name + '" loading="lazy"></div>' +
+          '<div class="img-wrap">' +
+            '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">' +
+            '<button class="wishlist-quick-btn" data-wishlist-id="' + p.id + '" onclick="toggleWishlistProduct(' + p.id + ', event);"><i class="bi bi-heart"></i></button>' +
+            '<button class="quick-view-btn" onclick="showQuickView(' + p.id + ', event);"><i class="bi bi-eye"></i> Quick View</button>' +
+          '</div>' +
         '</a>' +
         '<div class="body">' +
           '<p class="cat-tag mb-1">' + p.cat + '</p>' +
           '<h6 class="fw-semibold mb-1">' + p.name + '</h6>' +
           '<p class="price mb-2">' + formatRupiah(p.price) + '</p>' +
-          '<button class="btn-main w-100 justify-content-center" onclick="CartStore.add(PRODUCTS.find(function(x){return x.id===' + p.id + '}))">Add to Cart <i class="bi bi-bag-plus"></i></button>' +
+          '<button class="btn-main w-100 justify-content-center" onclick="CartStore.add(PRODUCTS.find(function(x){return x.id===' + p.id + '})); triggerButtonFeedback(this);">Add to Cart <i class="bi bi-bag-plus"></i></button>' +
         '</div>' +
       '</div>';
     row.appendChild(col);

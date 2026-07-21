@@ -46,6 +46,7 @@
 }
 @media (max-width:576px){
   .product-gallery img{height:280px;}
+  .action-buttons .btn-main { min-width: 0 !important; }
 }
 </style>
 </head>
@@ -174,7 +175,11 @@ document.addEventListener('DOMContentLoaded', function(){
     col.innerHTML =
       '<div class="product-card">' +
         '<a href="detail-produk.html?id=' + p.id + '">' +
-          '<div class="img-wrap"><img src="' + p.img + '" alt="' + p.name + '" loading="lazy"></div>' +
+          '<div class="img-wrap">' +
+            '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">' +
+            '<button class="wishlist-quick-btn" data-wishlist-id="' + p.id + '" onclick="toggleWishlistProduct(' + p.id + ', event);"><i class="bi bi-heart"></i></button>' +
+            '<button class="quick-view-btn" onclick="showQuickView(' + p.id + ', event);"><i class="bi bi-eye"></i> Quick View</button>' +
+          '</div>' +
         '</a>' +
         '<div class="body">' +
           '<p class="cat-tag mb-1">' + p.cat + '</p>' +
@@ -187,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 
   setTimeout(initScrollReveal, 150);
+  updateWishlistButtons();
 });
 
 // Quantity controls
@@ -218,6 +224,7 @@ document.getElementById('addToCartBtn').addEventListener('click', function(){
   showToast(currentProduct.name + ' (' + qty + 'x) ditambahkan ke keranjang!', 'bi-bag-check-fill', 'success');
   qty = 1;
   document.getElementById('qtyValue').textContent = '1';
+  triggerButtonFeedback(this);
 });
 
 // Wishlist toggle
@@ -234,6 +241,7 @@ document.getElementById('wishlistBtn').addEventListener('click', function(){
     icon.className = 'bi bi-heart';
     showToast(currentProduct.name + ' dihapus dari wishlist!', 'bi-heart', 'error');
   }
+  updateWishlistButtons();
 });
 
 // Related product add to cart (event delegation)
@@ -242,7 +250,10 @@ document.getElementById('relatedGrid').addEventListener('click', function(e){
   if(!btn) return;
   var id = Number(btn.dataset.id);
   var product = PRODUCTS.find(function(p){ return p.id === id; });
-  if(product) CartStore.add(product);
+  if(product) {
+    CartStore.add(product);
+    triggerButtonFeedback(btn);
+  }
 });
 </script>
 </body>

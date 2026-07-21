@@ -115,12 +115,14 @@ const WishlistStore = {
 
 // ===== Wishlist Badge =====
 function updateWishlistBadge() {
-  var badge = document.getElementById('wishlistBadge');
-  if (badge) {
-    var count = WishlistStore.getCount();
-    badge.textContent = count;
-    badge.style.display = count > 0 ? 'flex' : 'none';
-  }
+  var badges = [document.getElementById('wishlistBadge'), document.getElementById('wishlistBadgeBottom')];
+  var count = WishlistStore.getCount();
+  badges.forEach(function(badge) {
+    if (badge) {
+      badge.textContent = count;
+      badge.style.display = count > 0 ? 'flex' : 'none';
+    }
+  });
 }
 
 // ===== Toast System =====
@@ -147,12 +149,14 @@ function showToast(message, icon, type) {
 
 // ===== Cart Badge =====
 function updateCartBadge() {
-  var badge = document.getElementById('cartBadge');
-  if (badge) {
-    var count = CartStore.getCount();
-    badge.textContent = count;
-    badge.style.display = count > 0 ? 'flex' : 'none';
-  }
+  var badges = [document.getElementById('cartBadge'), document.getElementById('cartBadgeBottom')];
+  var count = CartStore.getCount();
+  badges.forEach(function(badge) {
+    if (badge) {
+      badge.textContent = count;
+      badge.style.display = count > 0 ? 'flex' : 'none';
+    }
+  });
 }
 
 // ===== Active Nav Link =====
@@ -311,6 +315,19 @@ function loadNavbar() {
       updateCartBadge();
       updateWishlistBadge();
       initSearch();
+      injectQuickViewModal();
+      updateWishlistButtons();
+
+      // bottom navigation active state sync
+      var currentPage = window.location.pathname.split('/').pop() || 'beranda.html';
+      var bottomLinks = document.querySelectorAll('.mobile-bottom-nav-item');
+      bottomLinks.forEach(function(link) {
+        link.classList.remove('active');
+        var href = link.getAttribute('href');
+        if (href === currentPage) {
+          link.classList.add('active');
+        }
+      });
 
       var nav = document.querySelector('.navbar-custom');
       if (nav) {
@@ -346,4 +363,121 @@ document.addEventListener('DOMContentLoaded', function() {
   loadFooter();
   setTimeout(initScrollReveal, 100);
   setTimeout(initCounterAnimation, 200);
+  setTimeout(updateWishlistButtons, 300);
 });
+
+// ===== Premium UX Helper Functions =====
+
+function toggleWishlistProduct(id, event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  var product = PRODUCTS.find(function(p){ return p.id === id; });
+  if (!product) return;
+  var added = WishlistStore.toggle(product);
+  if (added) {
+    showToast(product.name + ' ditambahkan ke wishlist!', 'bi-heart-fill', 'success');
+  } else {
+    showToast(product.name + ' dihapus dari wishlist!', 'bi-heart', 'error');
+  }
+  updateWishlistButtons();
+}
+
+function updateWishlistButtons() {
+  var buttons = document.querySelectorAll('.wishlist-quick-btn');
+  buttons.forEach(function(btn) {
+    var id = Number(btn.dataset.wishlistId);
+    var isSaved = WishlistStore.has(id);
+    btn.classList.toggle('active', isSaved);
+    var icon = btn.querySelector('i');
+    if (icon) {
+      if (isSaved) {
+        icon.className = 'bi bi-heart-fill';
+      } else {
+        icon.className = 'bi bi-heart';
+      }
+    }
+  });
+}
+
+function triggerButtonFeedback(button) {
+  if (!button) return;
+  button.disabled = true;
+  button.classList.add('btn-success-feedback');
+  var currentContent = button.innerHTML;
+  button.innerHTML = 'Added <i class="bi bi-check2"></i>';
+  setTimeout(function() {
+    button.innerHTML = currentContent;
+    button.classList.remove('btn-success-feedback');
+    button.disabled = false;
+  }, 1200);
+}
+
+function injectQuickViewModal() {
+  if (document.getElementById('quickViewModal')) return;
+  var modalHtml = 
+    '<div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">' +
+      '<div class="modal-dialog modal-dialog-centered modal-lg">' +
+        '<div class="modal-content" style="border-radius:24px; border:none; overflow:hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);">' +
+          '<div class="modal-body p-0">' +
+            '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="position:absolute; top:20px; right:20px; z-index:100; background-color:#fff; padding:10px; border-radius:50%; box-shadow:0 4px 10px rgba(0,0,0,0.05); border:none;"></button>' +
+            '<div class="row g-0">' +
+              '<div class="col-md-6">' +
+                '<div class="img-wrap" style="aspect-ratio:3/4; width:100%; background:#fff;">' +
+                  '<img id="qvImage" src="" alt="" style="width:100%; height:100%; object-fit:cover;">' +
+                '</div>' +
+              '</div>' +
+              '<div class="col-md-6 d-flex flex-column justify-content-center p-4 p-md-5">' +
+                '<span id="qvCat" class="mb-2" style="font-size:0.75rem; text-transform:uppercase; font-weight:600; color:var(--primary); background:var(--primary-light); padding:0.25rem 0.75rem; border-radius:50px; width:fit-content;"></span>' +
+                '<h3 id="qvName" class="fw-bold mb-2"></h3>' +
+                '<p id="qvPrice" class="price mb-3" style="color:var(--primary); font-weight:800; font-size:1.4rem;"></p>' +
+                '<p id="qvDesc" class="text-secondary mb-4" style="font-size:0.92rem; line-height:1.6;"></p>' +
+                '<div class="d-flex gap-3 align-items-center">' +
+                  '<button id="qvAddToCartBtn" class="btn-main flex-grow-1" style="border-radius:50px; padding:0.75rem 1.5rem;">' +
+                    'Add to Cart <i class="bi bi-bag-plus ms-1"></i>' +
+                  '</button>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  var div = document.createElement('div');
+  div.innerHTML = modalHtml;
+  document.body.appendChild(div.firstElementChild);
+}
+
+function showQuickView(id, event) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  var product = PRODUCTS.find(function(p){ return p.id === id; });
+  if (!product) return;
+  
+  injectQuickViewModal();
+  
+  document.getElementById('qvImage').src = product.img;
+  document.getElementById('qvImage').alt = product.name;
+  document.getElementById('qvCat').textContent = product.cat.toUpperCase();
+  document.getElementById('qvName').textContent = product.name;
+  document.getElementById('qvPrice').textContent = formatRupiah(product.price);
+  document.getElementById('qvDesc').textContent = product.desc;
+  
+  var cartBtn = document.getElementById('qvAddToCartBtn');
+  cartBtn.onclick = function() {
+    CartStore.add(product);
+    triggerButtonFeedback(cartBtn);
+    setTimeout(function() {
+      var modalEl = document.getElementById('quickViewModal');
+      var modal = bootstrap.Modal.getInstance(modalEl);
+      if (modal) modal.hide();
+    }, 1200);
+  };
+  
+  var modalEl = document.getElementById('quickViewModal');
+  var modal = new bootstrap.Modal(modalEl);
+  modal.show();
+}

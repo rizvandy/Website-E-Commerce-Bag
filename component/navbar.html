@@ -12,8 +12,15 @@
 .cart-badge{position:absolute;top:-8px;right:-10px;background:var(--primary);color:#fff;font-size:0.6rem;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;font-weight:700;border:2px solid var(--bg);}
 .wishlist-badge{position:absolute;top:-8px;right:-10px;background:var(--danger);color:#fff;font-size:0.6rem;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;font-weight:700;border:2px solid var(--bg);}
 @media(max-width:991px){
-  .navbar-collapse{background:var(--bg);padding:1rem;border-radius:16px;margin-top:0.5rem;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center;}
-  .navbar-nav { align-items: center; }
+  .navbar-collapse{background:transparent;padding:0;margin:0;box-shadow:none;border:none;}
+  .navbar-nav {
+    background:var(--bg);
+    padding:1rem;
+    border-radius:16px;
+    margin-top:0.5rem;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    align-items: center;
+  }
   .navbar-custom { min-height: 60px; }
   .icon-link { font-size: 1.1rem; }
 }
@@ -44,36 +51,6 @@
     </div>
   </div>
 </nav>
-
-<!-- Mobile Sticky Bottom Navigation -->
-<div class="mobile-bottom-nav d-md-none">
-  <a href="beranda.html" class="mobile-bottom-nav-item" id="bottomNavBeranda">
-    <i class="bi bi-house"></i>
-    <span>Beranda</span>
-  </a>
-  <a href="produk.html" class="mobile-bottom-nav-item" id="bottomNavProduk">
-    <i class="bi bi-bag-dash"></i>
-    <span>Produk</span>
-  </a>
-  <a href="wishlist.html" class="mobile-bottom-nav-item mobile-bottom-wishlist" id="bottomNavWishlist">
-    <div class="icon-badge-wrap">
-      <i class="bi bi-heart"></i>
-      <span class="wishlist-badge bottom-badge" id="wishlistBadgeBottom">0</span>
-    </div>
-    <span>Wishlist</span>
-  </a>
-  <a href="keranjang-belanja.html" class="mobile-bottom-nav-item mobile-bottom-cart" id="bottomNavCart">
-    <div class="icon-badge-wrap">
-      <i class="bi bi-bag"></i>
-      <span class="cart-badge bottom-badge" id="cartBadgeBottom">0</span>
-    </div>
-    <span>Keranjang</span>
-  </a>
-  <a href="login.html" class="mobile-bottom-nav-item" id="bottomNavAccount">
-    <i class="bi bi-person"></i>
-    <span>Akun</span>
-  </a>
-</div>
 
 <!-- Search Overlay -->
 <div class="search-overlay" id="searchOverlay">

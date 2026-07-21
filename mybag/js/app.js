@@ -115,14 +115,12 @@ const WishlistStore = {
 
 // ===== Wishlist Badge =====
 function updateWishlistBadge() {
-  var badges = [document.getElementById('wishlistBadge'), document.getElementById('wishlistBadgeBottom')];
-  var count = WishlistStore.getCount();
-  badges.forEach(function(badge) {
-    if (badge) {
-      badge.textContent = count;
-      badge.style.display = count > 0 ? 'flex' : 'none';
-    }
-  });
+  var badge = document.getElementById('wishlistBadge');
+  if (badge) {
+    var count = WishlistStore.getCount();
+    badge.textContent = count;
+    badge.style.display = count > 0 ? 'flex' : 'none';
+  }
 }
 
 // ===== Toast System =====
@@ -149,14 +147,12 @@ function showToast(message, icon, type) {
 
 // ===== Cart Badge =====
 function updateCartBadge() {
-  var badges = [document.getElementById('cartBadge'), document.getElementById('cartBadgeBottom')];
-  var count = CartStore.getCount();
-  badges.forEach(function(badge) {
-    if (badge) {
-      badge.textContent = count;
-      badge.style.display = count > 0 ? 'flex' : 'none';
-    }
-  });
+  var badge = document.getElementById('cartBadge');
+  if (badge) {
+    var count = CartStore.getCount();
+    badge.textContent = count;
+    badge.style.display = count > 0 ? 'flex' : 'none';
+  }
 }
 
 // ===== Active Nav Link =====
@@ -317,17 +313,6 @@ function loadNavbar() {
       initSearch();
       injectQuickViewModal();
       updateWishlistButtons();
-
-      // bottom navigation active state sync
-      var currentPage = window.location.pathname.split('/').pop() || 'beranda.html';
-      var bottomLinks = document.querySelectorAll('.mobile-bottom-nav-item');
-      bottomLinks.forEach(function(link) {
-        link.classList.remove('active');
-        var href = link.getAttribute('href');
-        if (href === currentPage) {
-          link.classList.add('active');
-        }
-      });
 
       var nav = document.querySelector('.navbar-custom');
       if (nav) {

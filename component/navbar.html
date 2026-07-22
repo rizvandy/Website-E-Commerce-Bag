@@ -183,13 +183,11 @@
       justify-content: space-between;
     }
 
-    /* 1. Hide Wishlist & Cart icons from Top Header Row on Mobile */
     .nav-icons .wishlist-icon-wrap,
     .nav-icons .cart-icon-wrap {
       display: none !important;
     }
 
-    /* 2. Hamburger button without outer border */
     .navbar-toggler {
       order: 1 !important;
       margin-right: 0.3rem !important;
@@ -238,7 +236,7 @@
       align-items: center !important;
     }
 
-    /* 3. Pure White Offcanvas Drawer Panel & Outer Backdrop Shadow */
+    /* Crisp Pure White Offcanvas Drawer Panel */
     .navbar-collapse {
       position: fixed !important;
       top: 0 !important;
@@ -252,7 +250,7 @@
       -webkit-backdrop-filter: none !important;
       z-index: 10050 !important;
       padding: 1.6rem !important;
-      box-shadow: 10px 0 35px rgba(0, 0, 0, 0.18) !important;
+      box-shadow: 10px 0 35px rgba(0, 0, 0, 0.15) !important;
       transform: translateX(-100%) !important;
       transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
       display: flex !important;
@@ -265,27 +263,15 @@
       transform: translateX(0) !important;
     }
 
+    /* Completely Remove Dark Dimming Backdrop Overlay */
     .mobile-drawer-backdrop {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.5) !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-      z-index: 10040;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.35s ease;
+      display: none !important;
+      pointer-events: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
     }
 
-    .mobile-drawer-backdrop.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* 4. Drawer Close [ X ] Button Far Right with Red Hover/Active State */
+    /* Drawer Header & Close Button Far Right with Red Click/Hover State */
     .drawer-header-mobile {
       display: flex !important;
       align-items: center;
@@ -317,23 +303,42 @@
       transform: scale(1.1);
     }
 
-    /* 5. Mobile Drawer Menu Links Layout */
+    /* Mobile Drawer Menu Links Layout & Icon Precision */
     .navbar-nav {
       background: transparent !important;
       padding: 0 !important;
       box-shadow: none !important;
       align-items: flex-start !important;
       width: 100% !important;
-      gap: 0.6rem !important;
+      gap: 0.5rem !important;
     }
 
     .nav-link {
-      font-size: 1.05rem !important;
-      padding: 0.65rem 0 !important;
+      font-size: 1.02rem !important;
+      padding: 0.65rem 0.5rem !important;
       width: 100% !important;
       text-align: left !important;
       display: flex !important;
       align-items: center !important;
+      gap: 0.75rem !important;
+      border-radius: 10px;
+      margin: 0 !important;
+      transition: all 0.25s ease;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      background: var(--primary-light) !important;
+    }
+
+    .nav-link::after {
+      display: none !important;
+    }
+
+    .nav-link i {
+      font-size: 1.2rem !important;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
     }
   }
 </style>
@@ -363,18 +368,18 @@
             class="bi bi-x-lg"></i></button>
       </div>
       <ul class="navbar-nav mx-auto gap-1">
-        <li class="nav-item"><a class="nav-link" href="beranda.html" data-i18n="nav_home"><i class="bi bi-house-door me-2.5 d-lg-none" style="font-size:1.15rem;"></i><span>Beranda</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="produk.html" data-i18n="nav_products"><i class="bi bi-grid me-2.5 d-lg-none" style="font-size:1.15rem;"></i><span>Produk</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="tentang-kami.html" data-i18n="nav_about"><i class="bi bi-info-circle me-2.5 d-lg-none" style="font-size:1.15rem;"></i><span>Tentang Kami</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="kontak.html" data-i18n="nav_contact"><i class="bi bi-envelope me-2.5 d-lg-none" style="font-size:1.15rem;"></i><span>Kontak</span></a></li>
-        <li class="nav-item d-lg-none w-100"><a class="nav-link justify-content-between" href="wishlist.html"><span class="d-flex align-items-center"><i class="bi bi-heart me-2.5" style="font-size:1.15rem;"></i><span data-i18n="nav_wishlist">Wishlist</span></span><span class="badge rounded-pill bg-danger" id="mobileWishlistBadge" style="font-size:0.72rem;display:none;">0</span></a></li>
-        <li class="nav-item d-lg-none w-100"><a class="nav-link justify-content-between" href="keranjang-belanja.html"><span class="d-flex align-items-center"><i class="bi bi-bag me-2.5" style="font-size:1.15rem;"></i><span data-i18n="nav_cart">Keranjang Belanja</span></span><span class="badge rounded-pill bg-primary" id="mobileCartBadge" style="font-size:0.72rem;display:none;">0</span></a></li>
+        <li class="nav-item w-100"><a class="nav-link" href="beranda.html" data-i18n="nav_home"><i class="bi bi-house-door d-lg-none"></i><span>Beranda</span></a></li>
+        <li class="nav-item w-100"><a class="nav-link" href="produk.html" data-i18n="nav_products"><i class="bi bi-grid d-lg-none"></i><span>Produk</span></a></li>
+        <li class="nav-item w-100"><a class="nav-link" href="tentang-kami.html" data-i18n="nav_about"><i class="bi bi-info-circle d-lg-none"></i><span>Tentang Kami</span></a></li>
+        <li class="nav-item w-100"><a class="nav-link" href="kontak.html" data-i18n="nav_contact"><i class="bi bi-envelope d-lg-none"></i><span>Kontak</span></a></li>
+        <li class="nav-item d-lg-none w-100"><a class="nav-link justify-content-between" href="wishlist.html"><span class="d-flex align-items-center gap-3"><i class="bi bi-heart"></i><span data-i18n="nav_wishlist">Wishlist</span></span><span class="badge rounded-pill bg-danger" id="mobileWishlistBadge" style="font-size:0.72rem;display:none;">0</span></a></li>
+        <li class="nav-item d-lg-none w-100"><a class="nav-link justify-content-between" href="keranjang-belanja.html"><span class="d-flex align-items-center gap-3"><i class="bi bi-bag"></i><span data-i18n="nav_cart">Keranjang Belanja</span></span><span class="badge rounded-pill bg-primary" id="mobileCartBadge" style="font-size:0.72rem;display:none;">0</span></a></li>
       </ul>
     </div>
   </div>
 </nav>
 
-<!-- Backdrop Overlay for Mobile Drawer -->
+<!-- Backdrop Overlay for Mobile Drawer (Disabled Dark Dimming) -->
 <div class="mobile-drawer-backdrop" id="drawerBackdrop"></div>
 
 <!-- Search Overlay -->

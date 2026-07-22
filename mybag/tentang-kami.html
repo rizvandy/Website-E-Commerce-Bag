@@ -29,7 +29,20 @@
 .cta-box .btn-main:hover{background:var(--primary-light);color:var(--primary);box-shadow:0 8px 25px rgba(0,0,0,0.15);}
 
 @media (max-width:991px){
-  .story-img img{min-height:260px;margin-top:2rem;}
+  .story-img {
+    margin-top: 1rem;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .story-img img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 380px !important;
+    object-fit: cover !important;
+    margin-top: 0 !important;
+    min-height: 0 !important;
+    aspect-ratio: 4 / 3 !important;
+  }
 }
 </style>
 </head>

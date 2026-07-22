@@ -116,7 +116,7 @@ function renderWishlist() {
   } else {
     emptyState.classList.add('d-none');
     grid.innerHTML = wishlist.map(function(p, i) {
-      return '<div class="col-lg-4 col-md-6" id="wishlist-item-' + p.id + '">' +
+      return '<div class="col-6 col-md-6 col-lg-4" id="wishlist-item-' + p.id + '">' +
         '<div class="product-card position-relative">' +
           '<button class="wishlist-remove-btn" data-id="' + p.id + '" aria-label="Hapus dari Wishlist">' +
             '<i class="bi bi-trash3"></i>' +

@@ -640,7 +640,7 @@ input::-webkit-credentials-auto-fill-button {
   }
 
   .section {
-    padding: 4rem 0;
+    padding: 3.5rem 0;
   }
 
   .toast-container {
@@ -661,6 +661,50 @@ input::-webkit-credentials-auto-fill-button {
 
   .form-box {
     padding: 1.5rem;
+  }
+
+  /* 2-Column Product Grid Adjustments for Mobile */
+  .row.g-4 {
+    --bs-gutter-x: 0.75rem;
+    --bs-gutter-y: 0.85rem;
+  }
+
+  .product-card .body {
+    padding: 0.7rem 0.65rem 0.85rem;
+  }
+
+  .product-card .cat-tag {
+    font-size: 0.62rem;
+    padding: 0.15rem 0.45rem;
+  }
+
+  .product-card h6 {
+    font-size: 0.82rem;
+    margin-bottom: 0.2rem !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .product-card .price {
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem !important;
+  }
+
+  .product-card .btn-main {
+    padding: 0.45rem 0.5rem;
+    font-size: 0.76rem;
+    border-radius: 50px;
+    gap: 0.3rem;
+  }
+
+  .wishlist-quick-btn,
+  .wishlist-remove-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+    top: 8px;
+    right: 8px;
   }
 }
 

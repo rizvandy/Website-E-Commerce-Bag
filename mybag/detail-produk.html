@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function(){
   var relatedGrid = document.getElementById('relatedGrid');
   related.forEach(function(p, i){
     var col = document.createElement('div');
-    col.className = 'col-lg-3 col-md-6 reveal reveal-delay-' + (i + 1);
+    col.className = 'col-6 col-md-6 col-lg-3 reveal reveal-delay-' + (i + 1);
     col.innerHTML =
       '<div class="product-card">' +
         '<a href="detail-produk.html?id=' + p.id + '">' +

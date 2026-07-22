@@ -28,6 +28,7 @@
   .footer-links {
     list-style: none;
     padding: 0;
+    margin-bottom: 0;
   }
 
   .footer-links li {
@@ -112,21 +113,71 @@
     border-color: var(--primary);
     transform: translateY(-3px);
   }
+
+  /* Compact Mobile Footer Adjustments */
+  @media (max-width: 768px) {
+    .footer {
+      padding: 2.2rem 0 1.2rem;
+    }
+    .footer-header-mobile {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .footer-social {
+      margin-top: 0;
+    }
+    .footer-social a {
+      width: 32px;
+      height: 32px;
+      font-size: 0.82rem;
+    }
+    .footer-title {
+      font-size: 0.88rem;
+      margin-bottom: 0.5rem;
+    }
+    .footer-links li {
+      margin-bottom: 0.35rem;
+      font-size: 0.84rem;
+    }
+    .footer-links li i {
+      margin-right: 0.4rem;
+      font-size: 0.95rem;
+    }
+    .footer-text {
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+    .footer-bottom {
+      margin-top: 0.5rem;
+      font-size: 0.78rem;
+    }
+    .newsletter-form .form-control {
+      padding: 0.45rem 0.85rem;
+      font-size: 0.84rem;
+    }
+    .newsletter-form .btn-main {
+      padding: 0.45rem 0.85rem;
+    }
+  }
 </style>
 <footer class="footer">
   <div class="container">
-    <div class="row gy-4">
+    <div class="row gy-3 gy-md-4">
       <div class="col-lg-4 col-md-12 col-12">
-        <h5 class="footer-logo">MyBag</h5>
-        <p class="footer-text">Tas kulit premium yang dibuat untuk para penjelajah modern. Dirancang untuk bertahan,
-          dibuat untuk menginspirasi.</p>
-        <div class="footer-social">
-          <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
-          <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+        <div class="footer-header-mobile">
+          <h5 class="footer-logo mb-0">MyBag</h5>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+          </div>
         </div>
+        <p class="footer-text d-none d-md-block mt-2">Tas kulit premium yang dibuat untuk para penjelajah modern. Dirancang untuk bertahan, dibuat untuk menginspirasi.</p>
       </div>
+
       <div class="col-lg-2 col-md-4 col-6">
         <h6 class="footer-title">Navigasi</h6>
         <ul class="footer-links">
@@ -136,25 +187,27 @@
           <li><a href="kontak.html">Kontak</a></li>
         </ul>
       </div>
-      <div class="col-lg-3 col-md-8 col-12">
+
+      <div class="col-lg-3 col-md-4 col-6">
         <h6 class="footer-title">Kontak</h6>
         <ul class="footer-links">
-          <li><i class="bi bi-geo-alt"></i><span>Jl. Puncak Indah, Surabaya, Indonesia</span></li>
+          <li><i class="bi bi-geo-alt"></i><span>Surabaya, ID</span></li>
           <li><i class="bi bi-envelope"></i><span>hello@mybag.com</span></li>
           <li><i class="bi bi-telephone"></i><span>+62 812 3456 7890</span></li>
         </ul>
       </div>
-      <div class="col-lg-3 col-md-12 col-12">
+
+      <div class="col-lg-3 col-md-4 col-12">
         <h6 class="footer-title">Newsletter</h6>
-        <p class="footer-text">Dapatkan info koleksi terbaru.</p>
+        <p class="footer-text mb-2">Dapatkan info koleksi terbaru.</p>
         <form class="newsletter-form" onsubmit="return false;">
           <input type="email" class="form-control" placeholder="Email Anda" required>
-          <button class="btn-main" type="submit"><i class="bi bi-send"></i></button>
+          <button class="btn-main" type="submit" aria-label="Kirim"><i class="bi bi-send"></i></button>
         </form>
       </div>
     </div>
-    <hr style="border-color:var(--border);">
-    <p class="footer-bottom">&copy; 2026 MyBag. All rights reserved.</p>
+    <hr class="my-3 my-md-4" style="border-color:var(--border);">
+    <p class="footer-bottom mb-0">&copy; 2026 MyBag. All rights reserved.</p>
   </div>
 </footer>
 

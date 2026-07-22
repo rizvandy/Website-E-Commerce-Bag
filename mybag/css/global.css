@@ -692,10 +692,21 @@ input::-webkit-credentials-auto-fill-button {
   }
 
   .product-card .btn-main {
-    padding: 0.45rem 0.5rem;
-    font-size: 0.76rem;
-    border-radius: 50px;
-    gap: 0.3rem;
+    width: 100% !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    padding: 0 0.4rem !important;
+    font-size: 0.76rem !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    border-radius: 50px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.3rem !important;
+    flex-wrap: nowrap !important;
+    line-height: 1 !important;
   }
 
   .wishlist-quick-btn,

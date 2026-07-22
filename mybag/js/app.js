@@ -477,6 +477,42 @@ function getTranslatedProducts() {
   return PRODUCTS.map(p => I18nStore.getProduct(p));
 }
 
+// ===== Render Home Page Products =====
+function renderHomeProducts() {
+  const container = document.getElementById('homeProductGrid');
+  if (!container) return;
+
+  const products = getTranslatedProducts();
+  container.innerHTML = products.map((p, i) => {
+    return `
+      <div class="col-6 col-md-6 col-lg-4 reveal revealed" style="animation-delay:${i * 0.08}s;">
+        <div class="product-card">
+          <a href="detail-produk.html?id=${p.id}">
+            <div class="img-wrap">
+              <img src="${p.img}" alt="${p.name}" loading="lazy">
+              <button class="wishlist-quick-btn" data-wishlist-id="${p.id}" onclick="toggleWishlistProduct(${p.id}, event);"><i class="bi bi-heart"></i></button>
+              <button class="quick-view-btn" onclick="showQuickView(${p.id}, event);"><i class="bi bi-eye"></i> ${I18nStore.t('btn_quick_view')}</button>
+            </div>
+          </a>
+          <div class="body">
+            <p class="cat-tag mb-1">${p.cat}</p>
+            <h6 class="fw-semibold mb-1">${p.name}</h6>
+            <p class="price mb-2">${formatRupiah(p.price)}</p>
+            <button class="btn-main w-100 justify-content-center" data-id="${p.id}" onclick="CartStore.add(PRODUCTS.find(pr=>pr.id===${p.id})); triggerButtonFeedback(this);">
+              ${I18nStore.t('btn_add_to_cart')} <i class="bi bi-bag-plus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  if (typeof updateWishlistButtons === 'function') {
+    updateWishlistButtons();
+  }
+}
+window.renderHomeProducts = renderHomeProducts;
+
 // ===== Format Rupiah =====
 function formatRupiah(n) {
   return 'Rp ' + n.toLocaleString('id-ID');

@@ -121,7 +121,7 @@ const TRANSLATIONS = {
 
     // Keranjang Belanja
     cart_eyebrow: "Keranjang Belanja",
-    cart_title: "Keranjang Belanja",
+    cart_title: "Pesanan Saya",
     cart_subtitle: "Tinjau pesanan Anda sebelum melakukan checkout.",
     cart_th_product: "Produk",
     cart_th_price: "Harga",
@@ -174,6 +174,7 @@ const TRANSLATIONS = {
     // Toasts
     toast_added_cart: "ditambahkan ke keranjang!",
     toast_added_wishlist: "ditambahkan ke wishlist!",
+    toast_removed_cart: "dihapus dari keranjang!",
     toast_removed_wishlist: "dihapus dari wishlist!",
     toast_newsletter_success: "Terima kasih! Anda berhasil berlangganan berita & promo MyBag."
   },
@@ -294,7 +295,7 @@ const TRANSLATIONS = {
 
     // Keranjang Belanja
     cart_eyebrow: "Shopping Cart",
-    cart_title: "Your Shopping Cart",
+    cart_title: "Your Orders",
     cart_subtitle: "Review your items before proceeding to checkout.",
     cart_th_product: "Product",
     cart_th_price: "Price",
@@ -347,6 +348,7 @@ const TRANSLATIONS = {
     // Toasts
     toast_added_cart: "added to cart!",
     toast_added_wishlist: "added to wishlist!",
+    toast_removed_cart: "removed from cart!",
     toast_removed_wishlist: "removed from wishlist!",
     toast_newsletter_success: "Thank you! You have successfully subscribed to MyBag newsletter & promos."
   }

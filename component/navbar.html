@@ -175,7 +175,7 @@
     box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
   }
 
-  /* Mobile Offcanvas Slide-in Drawer (from Left) */
+  /* Mobile Responsive Optimizations */
   @media(max-width:991px) {
     .navbar-custom .container {
       display: flex;
@@ -185,10 +185,11 @@
 
     .navbar-toggler {
       order: 1 !important;
-      margin-right: 0.4rem !important;
+      margin-right: 0.3rem !important;
       margin-left: 0 !important;
-      padding: 0.2rem 0.4rem !important;
+      padding: 0.25rem 0.4rem !important;
       border-radius: 8px;
+      border: 1px solid var(--border);
     }
 
     .navbar-brand {
@@ -202,7 +203,9 @@
       order: 3 !important;
       margin-left: auto !important;
       margin-right: 0 !important;
-      gap: 0.35rem !important;
+      gap: 0.45rem !important;
+      display: inline-flex !important;
+      align-items: center !important;
     }
 
     .navbar-custom {
@@ -210,18 +213,23 @@
     }
 
     .icon-link {
-      width: 30px;
-      height: 30px;
-      font-size: 1rem;
+      width: 34px !important;
+      height: 34px !important;
+      font-size: 1.1rem !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
 
     .lang-toggle-btn {
-      height: 28px;
-      padding: 0 0.5rem;
-      font-size: 0.68rem;
+      height: 32px !important;
+      padding: 0 0.6rem !important;
+      font-size: 0.75rem !important;
+      display: inline-flex !important;
+      align-items: center !important;
     }
 
-    /* Slide-in Drawer from Left */
+    /* Crystal Clear Slide-in Drawer from Left (No Blur on Text) */
     .navbar-collapse {
       position: fixed !important;
       top: 0 !important;
@@ -230,7 +238,9 @@
       width: 280px !important;
       max-width: 80vw !important;
       height: 100vh !important;
-      background: var(--bg) !important;
+      background: #ffffff !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
       z-index: 10050 !important;
       padding: 1.5rem !important;
       box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15) !important;
@@ -252,9 +262,9 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.5) !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
       z-index: 10040;
       opacity: 0;
       visibility: hidden;

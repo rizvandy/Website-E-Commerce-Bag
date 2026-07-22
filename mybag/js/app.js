@@ -10,6 +10,8 @@ const TRANSLATIONS = {
     nav_products: "Produk",
     nav_about: "Tentang Kami",
     nav_contact: "Kontak",
+    nav_wishlist: "Wishlist",
+    nav_cart: "Keranjang Belanja",
     search_placeholder: "Cari produk...",
     search_hint: "Ketik untuk mencari produk...",
     search_no_results: "Tidak ada produk yang cocok.",
@@ -184,6 +186,8 @@ const TRANSLATIONS = {
     nav_products: "Products",
     nav_about: "About Us",
     nav_contact: "Contact",
+    nav_wishlist: "Wishlist",
+    nav_cart: "Shopping Cart",
     search_placeholder: "Search products...",
     search_hint: "Type to search products...",
     search_no_results: "No matching products found.",
@@ -609,20 +613,32 @@ const WishlistStore = {
 // ===== Update Badges =====
 function updateCartBadge() {
   const badge = document.getElementById('cartBadge');
-  if (!badge) return;
+  const mobileBadge = document.getElementById('mobileCartBadge');
   const cart = CartStore.get();
   const total = cart.reduce((sum, item) => sum + item.qty, 0);
-  badge.textContent = total;
-  badge.style.display = total > 0 ? 'flex' : 'none';
+  if (badge) {
+    badge.textContent = total;
+    badge.style.display = total > 0 ? 'flex' : 'none';
+  }
+  if (mobileBadge) {
+    mobileBadge.textContent = total;
+    mobileBadge.style.display = total > 0 ? 'inline-block' : 'none';
+  }
 }
 
 function updateWishlistBadge() {
   const badge = document.getElementById('wishlistBadge');
-  if (!badge) return;
+  const mobileBadge = document.getElementById('mobileWishlistBadge');
   const wishlist = WishlistStore.get();
   const total = wishlist.length;
-  badge.textContent = total;
-  badge.style.display = total > 0 ? 'flex' : 'none';
+  if (badge) {
+    badge.textContent = total;
+    badge.style.display = total > 0 ? 'flex' : 'none';
+  }
+  if (mobileBadge) {
+    mobileBadge.textContent = total;
+    mobileBadge.style.display = total > 0 ? 'inline-block' : 'none';
+  }
 }
 
 function updateWishlistButtons() {

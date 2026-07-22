@@ -56,24 +56,24 @@
     <div class="register-box">
       <div class="form-box">
         <div class="brand-icon">M</div>
-        <h2 style="font-weight:700;font-size:1.8rem;text-align:center;margin-bottom:0.3rem;">Create Account</h2>
-        <p class="subtitle" style="text-align:center;margin-bottom:2rem;">Bergabung dan nikmati belanja premium.</p>
+        <h2 style="font-weight:700;font-size:1.8rem;text-align:center;margin-bottom:0.3rem;" data-i18n="reg_title">Create Account</h2>
+        <p class="subtitle" style="text-align:center;margin-bottom:2rem;" data-i18n="reg_subtitle">Bergabung dan nikmati belanja premium.</p>
 
         <form id="registerForm" novalidate>
           <div class="mb-3">
-            <label for="regName">Nama Lengkap</label>
-            <input type="text" class="form-control" id="regName" placeholder="Nama lengkap Anda">
-            <div class="invalid-msg" id="regNameError">Nama wajib diisi (min. 3 karakter).</div>
+            <label for="regName" data-i18n="form_fullname">Nama Lengkap</label>
+            <input type="text" class="form-control" id="regName" placeholder="Nama lengkap Anda" data-i18n-placeholder="form_fullname_ph">
+            <div class="invalid-msg" id="regNameError" data-i18n="err_name">Nama wajib diisi (min. 3 karakter).</div>
           </div>
           <div class="mb-3">
-            <label for="regEmail">Email</label>
-            <input type="email" class="form-control" id="regEmail" placeholder="nama@email.com">
-            <div class="invalid-msg" id="regEmailError">Masukkan alamat email yang valid.</div>
+            <label for="regEmail" data-i18n="form_email">Alamat Email</label>
+            <input type="email" class="form-control" id="regEmail" placeholder="nama@email.com" data-i18n-placeholder="form_email_ph">
+            <div class="invalid-msg" id="regEmailError" data-i18n="err_email">Masukkan email yang valid.</div>
           </div>
           <div class="mb-3">
-            <label for="regPassword">Password</label>
+            <label for="regPassword" data-i18n="form_password">Password</label>
             <div class="password-wrap">
-              <input type="password" class="form-control" id="regPassword" placeholder="Buat password (min. 6 karakter)">
+              <input type="password" class="form-control" id="regPassword" placeholder="Buat password (min. 6 karakter)" data-i18n-placeholder="reg_pass_ph">
               <button type="button" class="toggle-pass" id="togglePass1" aria-label="Toggle password"><i class="bi bi-eye"></i></button>
             </div>
             <div class="invalid-msg" id="regPasswordError">Password minimal 6 karakter.</div>
@@ -81,21 +81,21 @@
             <div class="strength-text" id="strengthText"></div>
           </div>
           <div class="mb-3">
-            <label for="regConfirm">Konfirmasi Password</label>
+            <label for="regConfirm" data-i18n="reg_confirm_pass">Konfirmasi Password</label>
             <div class="password-wrap">
-              <input type="password" class="form-control" id="regConfirm" placeholder="Ulangi password">
+              <input type="password" class="form-control" id="regConfirm" placeholder="Ulangi password" data-i18n-placeholder="reg_confirm_pass_ph">
               <button type="button" class="toggle-pass" id="togglePass2" aria-label="Toggle password"><i class="bi bi-eye"></i></button>
             </div>
             <div class="invalid-msg" id="regConfirmError">Password tidak cocok.</div>
           </div>
           <div class="terms-check mb-4">
             <input type="checkbox" id="termsCheck">
-            <label for="termsCheck">Saya setuju dengan <a href="#">Syarat & Ketentuan</a> serta <a href="#">Kebijakan Privasi</a></label>
+            <label for="termsCheck" data-i18n="reg_agree">Saya setuju dengan Syarat & Ketentuan serta Kebijakan Privasi</label>
           </div>
           <div class="invalid-msg mb-3" id="termsError" style="text-align:center;">Anda harus menyetujui syarat & ketentuan.</div>
-          <button type="submit" class="btn-main" style="width:100%;justify-content:center;">Create Account <i class="bi bi-arrow-right ms-1"></i></button>
+          <button type="submit" class="btn-main" style="width:100%;justify-content:center;"><span data-i18n="btn_sign_up">Create Account</span> <i class="bi bi-arrow-right ms-1"></i></button>
         </form>
-        <p class="login-text">Already have an account? <a href="login.html">Login</a></p>
+        <p class="login-text"><span data-i18n="reg_has_account">Already have an account?</span> <a href="login.html" data-i18n="reg_login_link">Login</a></p>
       </div>
     </div>
   </div>
@@ -120,7 +120,6 @@ function setError(input, errorEl, show){
   errorEl.style.display = show ? 'block' : 'none';
 }
 
-// Password strength indicator
 regPassword.addEventListener('input', function(){
   var val = regPassword.value;
   var score = 0;
@@ -144,14 +143,12 @@ regPassword.addEventListener('input', function(){
   }
 });
 
-// Clear confirm error on input
 regConfirm.addEventListener('input', function(){
   if(regConfirm.classList.contains('is-invalid') && regConfirm.value === regPassword.value){
     setError(regConfirm, document.getElementById('regConfirmError'), false);
   }
 });
 
-// Clear name/email errors on input
 regName.addEventListener('input', function(){
   if(regName.classList.contains('is-invalid') && regName.value.trim().length >= 3){
     setError(regName, document.getElementById('regNameError'), false);
@@ -193,7 +190,6 @@ regForm.addEventListener('submit', function(e){
   }
 });
 
-// Toggle passwords
 document.getElementById('togglePass1').addEventListener('click', function(){
   var isPass = regPassword.type === 'password';
   regPassword.type = isPass ? 'text' : 'password';

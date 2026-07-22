@@ -75,26 +75,26 @@
 <!-- Cart -->
 <section class="section" style="padding-top:7rem;">
   <div class="container">
-    <h1 class="title mb-1 reveal">Keranjang Belanja</h1>
+    <h1 class="title mb-1 reveal" data-i18n="cart_title">Keranjang Belanja</h1>
     <p class="subtitle mb-4 reveal" id="cartCount"></p>
     <div class="row g-4">
       <div class="col-lg-8">
         <div id="cartItems" class="d-flex flex-column gap-3"></div>
         <div id="emptyState" class="empty-state d-none">
           <div class="empty-icon"><i class="bi bi-bag-x"></i></div>
-          <h5 class="fw-semibold mb-2">Keranjang Kosong</h5>
-          <p class="subtitle mb-3">Belum ada produk di keranjang Anda.</p>
-          <a href="produk.html" class="btn-outline-main">Mulai Belanja <i class="bi bi-arrow-right ms-1"></i></a>
+          <h5 class="fw-semibold mb-2" data-i18n="cart_empty_title">Keranjang Kosong</h5>
+          <p class="subtitle mb-3" data-i18n="cart_empty_desc">Belum ada produk di keranjang Anda.</p>
+          <a href="produk.html" class="btn-outline-main"><span data-i18n="btn_start_shopping">Mulai Belanja</span> <i class="bi bi-arrow-right ms-1"></i></a>
         </div>
       </div>
       <div class="col-lg-4">
         <div class="summary-card reveal">
-          <h5 class="fw-semibold mb-4">Ringkasan Pesanan</h5>
-          <div class="summary-row"><span>Subtotal</span><span id="sumSubtotal">Rp 0</span></div>
-          <div class="summary-row"><span>Ongkos Kirim</span><span id="sumShipping">Rp 0</span></div>
-          <div class="summary-total"><span>Total</span><span id="sumTotal">Rp 0</span></div>
+          <h5 class="fw-semibold mb-4" data-i18n="cart_summary_title">Ringkasan Pesanan</h5>
+          <div class="summary-row"><span data-i18n="cart_subtotal_label">Subtotal</span><span id="sumSubtotal">Rp 0</span></div>
+          <div class="summary-row"><span data-i18n="cart_shipping_label">Pengiriman</span><span id="sumShipping">Rp 0</span></div>
+          <div class="summary-total"><span data-i18n="cart_total_label">Total</span><span id="sumTotal">Rp 0</span></div>
           <button class="btn-main mt-4" id="checkoutBtn" style="width:100%;justify-content:center;">
-            Checkout Order <i class="bi bi-arrow-right ms-1"></i>
+            <span data-i18n="btn_checkout">Checkout Order</span> <i class="bi bi-arrow-right ms-1"></i>
           </button>
         </div>
       </div>
@@ -121,18 +121,21 @@ function renderCart(){
     container.innerHTML = '';
     emptyState.classList.remove('d-none');
     checkoutBtn.disabled = true;
-    cartCountEl.textContent = '0 item';
+    cartCountEl.textContent = '0 ' + I18nStore.t('wishlist_count_singular');
   } else {
     emptyState.classList.add('d-none');
     checkoutBtn.disabled = false;
     var totalItems = cart.reduce(function(s,i){ return s + i.qty; }, 0);
-    cartCountEl.textContent = totalItems + ' item' + (totalItems > 1 ? 's' : '');
+    var itemWord = totalItems > 1 ? I18nStore.t('wishlist_count_plural') : I18nStore.t('wishlist_count_singular');
+    cartCountEl.textContent = totalItems + ' ' + itemWord;
 
     container.innerHTML = cart.map(function(item){
+      var productRef = PRODUCTS.find(function(p){ return p.id === item.id; });
+      var pTrans = productRef ? I18nStore.getProduct(productRef) : item;
       return '<div class="cart-item d-flex align-items-center gap-3" data-id="' + item.id + '">' +
-        '<a href="detail-produk.html?id=' + item.id + '"><img src="' + item.img + '" alt="' + item.name + '" loading="lazy"></a>' +
+        '<a href="detail-produk.html?id=' + item.id + '"><img src="' + item.img + '" alt="' + pTrans.name + '" loading="lazy"></a>' +
         '<div class="flex-grow-1">' +
-          '<p class="name mb-1">' + item.name + '</p>' +
+          '<p class="name mb-1">' + pTrans.name + '</p>' +
           '<p class="price mb-2">' + formatRupiah(item.price) + '</p>' +
           '<div class="qty-control">' +
             '<button class="decrease" aria-label="Kurangi">−</button>' +
@@ -150,12 +153,16 @@ function renderCart(){
   updateTotals(cart);
 }
 
+function renderCartTable() {
+  renderCart();
+}
+
 function updateTotals(cart){
   var subtotal = cart.reduce(function(sum, item){ return sum + item.price * item.qty; }, 0);
   var shipping = cart.length > 0 ? SHIPPING_FEE : 0;
   var total = subtotal + shipping;
   document.getElementById('sumSubtotal').textContent = formatRupiah(subtotal);
-  document.getElementById('sumShipping').textContent = formatRupiah(shipping);
+  document.getElementById('sumShipping').textContent = cart.length > 0 ? formatRupiah(shipping) : I18nStore.t('cart_shipping_val');
   document.getElementById('sumTotal').textContent = formatRupiah(total);
 }
 
@@ -176,7 +183,7 @@ document.getElementById('cartItems').addEventListener('click', function(e){
     renderCart();
   } else if(e.target.closest('.remove-btn')){
     CartStore.remove(id);
-    showToast('Item dihapus dari keranjang', 'bi-trash3', 'error');
+    showToast(I18nStore.t('toast_removed_wishlist'), 'bi-trash3', 'error');
     renderCart();
   }
 });

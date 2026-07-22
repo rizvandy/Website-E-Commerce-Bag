@@ -44,12 +44,12 @@
   <div class="container hero-content">
     <div class="row">
       <div class="col-lg-7">
-        <span class="hero-badge">Premium Leather Goods</span>
-        <h1>Carry Your Adventure in Style</h1>
-        <p>Tas kulit premium yang dirancang untuk menemani setiap perjalanan Anda — elegan, tahan lama, dan penuh karakter.</p>
+        <span class="hero-badge" data-i18n="hero_badge">Produk Kulit Premium</span>
+        <h1 data-i18n="hero_title">Bawa Petualangan Anda dengan Gaya</h1>
+        <p data-i18n="hero_desc">Tas kulit premium yang dirancang untuk menemani setiap perjalanan Anda — elegan, tahan lama, dan penuh karakter.</p>
         <div class="d-flex gap-3 flex-wrap">
-          <a href="produk.html" class="btn-main">Explore Products <i class="bi bi-arrow-right"></i></a>
-          <a href="tentang-kami.html" class="btn-outline-main">Learn More</a>
+          <a href="produk.html" class="btn-main"><span data-i18n="btn_explore">Jelajahi Produk</span> <i class="bi bi-arrow-right"></i></a>
+          <a href="tentang-kami.html" class="btn-outline-main" data-i18n="btn_learn_more">Pelajari Lebih Lanjut</a>
         </div>
       </div>
     </div>
@@ -64,29 +64,29 @@
 <section class="section">
   <div class="container">
     <div class="text-center mb-5 reveal">
-      <p class="eyebrow">Kenapa MyBag</p>
-      <h2 class="title">Dibuat untuk Bertahan</h2>
+      <p class="eyebrow" data-i18n="why_eyebrow">Kenapa MyBag</p>
+      <h2 class="title" data-i18n="why_title">Dibuat untuk Bertahan</h2>
     </div>
     <div class="row g-4">
       <div class="col-md-4 reveal reveal-delay-1">
         <div class="card-box text-center text-md-start">
           <div class="icon-circle mx-auto mx-md-0"><i class="bi bi-gem"></i></div>
-          <h5 class="fw-semibold mb-2">Premium Quality</h5>
-          <p class="subtitle mb-0">Kulit pilihan dan jahitan tangan memastikan setiap produk tahan lama.</p>
+          <h5 class="fw-semibold mb-2" data-i18n="feat_1_title">Kualitas Premium</h5>
+          <p class="subtitle mb-0" data-i18n="feat_1_desc">Kulit pilihan dan jahitan tangan memastikan setiap produk tahan lama.</p>
         </div>
       </div>
       <div class="col-md-4 reveal reveal-delay-2">
         <div class="card-box text-center text-md-start">
           <div class="icon-circle mx-auto mx-md-0"><i class="bi bi-brush"></i></div>
-          <h5 class="fw-semibold mb-2">Elegant Design</h5>
-          <p class="subtitle mb-0">Desain minimalis dan timeless yang cocok untuk segala suasana.</p>
+          <h5 class="fw-semibold mb-2" data-i18n="feat_2_title">Desain Elegan</h5>
+          <p class="subtitle mb-0" data-i18n="feat_2_desc">Desain minimalis dan timeless yang cocok untuk segala suasana.</p>
         </div>
       </div>
       <div class="col-md-4 reveal reveal-delay-3">
         <div class="card-box text-center text-md-start">
           <div class="icon-circle mx-auto mx-md-0"><i class="bi bi-shield-check"></i></div>
-          <h5 class="fw-semibold mb-2">Secure Delivery</h5>
-          <p class="subtitle mb-0">Pengemasan aman dan pengiriman terpercaya ke seluruh Indonesia.</p>
+          <h5 class="fw-semibold mb-2" data-i18n="feat_3_title">Pengiriman Aman</h5>
+          <p class="subtitle mb-0" data-i18n="feat_3_desc">Pengemasan aman dan pengiriman terpercaya ke seluruh Indonesia.</p>
         </div>
       </div>
     </div>
@@ -97,12 +97,12 @@
 <section class="section section-bg">
   <div class="container">
     <div class="text-center mb-5 reveal">
-      <p class="eyebrow">Koleksi Terbaru</p>
-      <h2 class="title">Latest Collection</h2>
+      <p class="eyebrow" data-i18n="latest_eyebrow">Koleksi Terbaru</p>
+      <h2 class="title" data-i18n="latest_title">Koleksi Terbaru</h2>
     </div>
     <div class="row g-4" id="collectionRow"></div>
     <div class="text-center mt-5 reveal">
-      <a href="produk.html" class="btn-outline-main">Lihat Semua Produk <i class="bi bi-arrow-right ms-1"></i></a>
+      <a href="produk.html" class="btn-outline-main"><span data-i18n="btn_view_all">Lihat Semua Produk</span> <i class="bi bi-arrow-right ms-1"></i></a>
     </div>
   </div>
 </section>
@@ -113,34 +113,43 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/app.js"></script>
 <script>
-// Render 4 featured products using PRODUCTS from app.js
-document.addEventListener('DOMContentLoaded', function() {
+function renderHomeProducts() {
   var row = document.getElementById('collectionRow');
   if (!row) return;
+  row.innerHTML = '';
   var featured = PRODUCTS;
   featured.forEach(function(p, i) {
+    var pTrans = I18nStore.getProduct(p);
     var col = document.createElement('div');
-    col.className = 'col-6 col-md-6 col-lg-4 reveal reveal-delay-' + (i + 1);
+    col.className = 'col-6 col-md-6 col-lg-4 reveal revealed reveal-delay-' + (i + 1);
     col.innerHTML =
       '<div class="product-card">' +
         '<a href="detail-produk.html?id=' + p.id + '">' +
           '<div class="img-wrap">' +
-            '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">' +
+            '<img src="' + pTrans.img + '" alt="' + pTrans.name + '" loading="lazy">' +
             '<button class="wishlist-quick-btn" data-wishlist-id="' + p.id + '" onclick="toggleWishlistProduct(' + p.id + ', event);"><i class="bi bi-heart"></i></button>' +
-            '<button class="quick-view-btn" onclick="showQuickView(' + p.id + ', event);"><i class="bi bi-eye"></i> Quick View</button>' +
+            '<button class="quick-view-btn" onclick="showQuickView(' + p.id + ', event);"><i class="bi bi-eye"></i> ' + I18nStore.t('btn_quick_view') + '</button>' +
           '</div>' +
         '</a>' +
         '<div class="body">' +
-          '<p class="cat-tag mb-1">' + p.cat + '</p>' +
-          '<h6 class="fw-semibold mb-1">' + p.name + '</h6>' +
-          '<p class="price mb-2">' + formatRupiah(p.price) + '</p>' +
-          '<button class="btn-main w-100 justify-content-center" onclick="CartStore.add(PRODUCTS.find(function(x){return x.id===' + p.id + '})); triggerButtonFeedback(this);">Add to Cart <i class="bi bi-bag-plus"></i></button>' +
+          '<p class="cat-tag mb-1">' + pTrans.cat + '</p>' +
+          '<h6 class="fw-semibold mb-1">' + pTrans.name + '</h6>' +
+          '<p class="price mb-2">' + formatRupiah(pTrans.price) + '</p>' +
+          '<button class="btn-main w-100 justify-content-center" onclick="CartStore.add(PRODUCTS.find(function(x){return x.id===' + p.id + '})); triggerButtonFeedback(this);">' + I18nStore.t('btn_add_to_cart') + ' <i class="bi bi-bag-plus"></i></button>' +
         '</div>' +
       '</div>';
     row.appendChild(col);
   });
-  // Re-init scroll reveal for dynamically added elements
-  setTimeout(initScrollReveal, 150);
+  updateWishlistButtons();
+}
+
+function render() {
+  renderHomeProducts();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  renderHomeProducts();
+  setTimeout(initScrollReveal, 100);
 });
 </script>
 </body>

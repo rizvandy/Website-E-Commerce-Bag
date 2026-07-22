@@ -1,5 +1,5 @@
 <style>
-  /* Footer - Refined Epidemic Sound Style Layout */
+  /* Footer - Refined Opsi C Style Layout */
   .footer {
     background: var(--bg-section);
     padding: 4.5rem 0 2rem;
@@ -92,27 +92,11 @@
     flex-shrink: 0;
   }
 
-  /* Bottom Bar - Copyright left, Social right */
-  .footer-bottom-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    padding-top: 0.5rem;
-  }
-
-  .footer-bottom-text {
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    margin-bottom: 0;
-  }
-
   .footer-social-bar {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.75rem;
+    margin-top: 1.2rem;
   }
 
   .footer-social-bar a {
@@ -137,6 +121,30 @@
     transform: translateY(-2px);
   }
 
+  /* Bottom Bar - Legal links Left, Copyright Right */
+  .footer-bottom-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .footer-bottom-text {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 0;
+  }
+
+  .footer-legal-links a {
+    transition: color .25s ease;
+  }
+  .footer-legal-links a:hover {
+    color: var(--primary) !important;
+  }
+
   /* Responsive Adjustments for Mobile */
   @media (max-width: 768px) {
     .footer {
@@ -151,40 +159,49 @@
       font-size: 0.85rem;
     }
     .footer-bottom-bar {
-      flex-direction: column-reverse;
+      flex-direction: column;
       text-align: center;
-      gap: 1rem;
+      gap: 0.8rem;
+    }
+    .footer-legal-links {
+      justify-content: center;
     }
     .footer-social-bar {
-      justify-content: center;
+      justify-content: flex-start;
     }
   }
 </style>
 <footer class="footer">
   <div class="container">
     <div class="row gy-4 gx-lg-5">
-      <!-- Brand Section -->
+      <!-- Brand Section with Social Media below Tagline -->
       <div class="col-lg-4 col-md-12 col-12">
         <h5 class="footer-logo">MyBag</h5>
-        <p class="footer-text">Tas kulit premium yang dibuat untuk para penjelajah modern. Dirancang untuk bertahan, dibuat untuk menginspirasi.</p>
+        <p class="footer-text mb-2" data-i18n="footer_tagline">Tas kulit premium yang dibuat untuk para penjelajah modern. Dirancang untuk bertahan, dibuat untuk menginspirasi.</p>
+        <div class="footer-social-bar">
+          <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+        </div>
       </div>
 
       <!-- Navigasi -->
       <div class="col-lg-2 col-md-4 col-6">
-        <h6 class="footer-title">Navigasi</h6>
+        <h6 class="footer-title" data-i18n="footer_nav">NAVIGASI</h6>
         <ul class="footer-links">
-          <li><a href="beranda.html">Beranda</a></li>
-          <li><a href="produk.html">Produk</a></li>
-          <li><a href="tentang-kami.html">Tentang Kami</a></li>
-          <li><a href="kontak.html">Kontak</a></li>
+          <li><a href="beranda.html" data-i18n="nav_home">Beranda</a></li>
+          <li><a href="produk.html" data-i18n="nav_products">Produk</a></li>
+          <li><a href="tentang-kami.html" data-i18n="nav_about">Tentang Kami</a></li>
+          <li><a href="kontak.html" data-i18n="nav_contact">Kontak</a></li>
         </ul>
       </div>
 
       <!-- Kontak -->
       <div class="col-lg-3 col-md-4 col-6">
-        <h6 class="footer-title">Kontak</h6>
+        <h6 class="footer-title" data-i18n="footer_contact">KONTAK</h6>
         <ul class="footer-links">
-          <li><i class="bi bi-geo-alt"></i><span>Jl. Puncak Indah, Surabaya, Indonesia</span></li>
+          <li><i class="bi bi-geo-alt"></i><span data-i18n="contact_addr_val">Jl. Puncak Indah, Surabaya, Indonesia</span></li>
           <li><i class="bi bi-envelope"></i><span>hello@mybag.com</span></li>
           <li><i class="bi bi-telephone"></i><span>+62 812 3456 7890</span></li>
         </ul>
@@ -192,10 +209,10 @@
 
       <!-- Newsletter -->
       <div class="col-lg-3 col-md-4 col-12">
-        <h6 class="footer-title">Newsletter</h6>
-        <p class="footer-text mb-2">Dapatkan info koleksi terbaru.</p>
-        <form class="newsletter-form" onsubmit="return false;">
-          <input type="email" class="form-control" placeholder="Email Anda" required>
+        <h6 class="footer-title" data-i18n="footer_newsletter">BERITA & PROMO</h6>
+        <p class="footer-text mb-2" data-i18n="footer_newsletter_hint">Dapatkan info koleksi terbaru.</p>
+        <form class="newsletter-form" id="newsletterForm" onsubmit="return handleNewsletterSubmit(event);">
+          <input type="email" id="newsletterEmail" class="form-control" placeholder="Email Anda" data-i18n-placeholder="footer_email_placeholder" required>
           <button class="btn-main" type="submit" aria-label="Kirim"><i class="bi bi-send"></i></button>
         </form>
       </div>
@@ -204,15 +221,14 @@
     <!-- Divider Line -->
     <hr class="my-4" style="border-color:var(--border); opacity:0.7;">
 
-    <!-- Bottom Bar (Copyright Left, Social Right like Epidemic Sound reference) -->
+    <!-- Bottom Bar (Legal Links Left, Copyright Right) -->
     <div class="footer-bottom-bar">
-      <p class="footer-bottom-text">&copy; 2026 MyBag. All rights reserved.</p>
-      <div class="footer-social-bar">
-        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
-        <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+      <div class="footer-legal-links d-flex align-items-center gap-3" style="font-size:0.85rem;">
+        <a href="#" style="color:var(--text-secondary);text-decoration:none;" data-i18n="footer_terms">Syarat & Ketentuan</a>
+        <span style="color:var(--border);">|</span>
+        <a href="#" style="color:var(--text-secondary);text-decoration:none;" data-i18n="footer_privacy">Kebijakan Privasi</a>
       </div>
+      <p class="footer-bottom-text" data-i18n="footer_copyright">&copy; 2026 MyBag. Hak Cipta Dilindungi.</p>
     </div>
   </div>
 </footer>
@@ -221,3 +237,26 @@
 <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top">
   <i class="bi bi-arrow-up"></i>
 </button>
+
+<script>
+function handleNewsletterSubmit(e) {
+  if (e) e.preventDefault();
+  var input = document.getElementById('newsletterEmail') || document.querySelector('.newsletter-form input[type="email"]');
+  var email = input ? input.value.trim() : '';
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (typeof showToast === 'function') {
+      showToast(I18nStore.t('err_email'), 'bi-exclamation-circle-fill', 'error');
+    } else {
+      alert('Masukkan email yang valid.');
+    }
+    return false;
+  }
+  if (typeof showToast === 'function') {
+    showToast(I18nStore.t('toast_newsletter_success'), 'bi-check-circle-fill', 'success');
+  } else {
+    alert('Terima kasih telah berlangganan!');
+  }
+  if (input) input.value = '';
+  return false;
+}
+</script>

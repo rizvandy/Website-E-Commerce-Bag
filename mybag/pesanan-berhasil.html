@@ -48,26 +48,26 @@
   <div class="container">
     <div class="success-wrap">
       <div class="success-icon"><i class="bi bi-check-lg"></i></div>
-      <h1 class="success-title reveal">Thank You!</h1>
-      <p class="success-sub reveal">Pesanan Anda telah berhasil diproses.</p>
+      <h1 class="success-title reveal" data-i18n="success_title">Pesanan Berhasil!</h1>
+      <p class="success-sub reveal" data-i18n="success_desc">Terima kasih telah berbelanja di MyBag. Pesanan Anda sedang kami proses.</p>
 
       <div class="invoice-card" id="invoiceCard">
         <div class="invoice-header">
-          <h5>Invoice</h5>
+          <h5 data-i18n="success_summary_title">Invoice</h5>
           <span class="invoice-status"><i class="bi bi-check-circle me-1"></i>Paid</span>
         </div>
-        <div class="invoice-row"><span>No. Pesanan</span><span id="orderNumber">#MYB-20260714-001</span></div>
+        <div class="invoice-row"><span data-i18n="success_order_id">ID Pesanan:</span><span id="orderNumber">#MYB-20260714-001</span></div>
         <div class="invoice-row"><span>Tanggal</span><span id="orderDate"></span></div>
         <div class="invoice-products" id="orderProducts">
           <!-- Dynamic products -->
         </div>
-        <div class="invoice-row"><span>Ongkos Kirim</span><span>Rp 25.000</span></div>
-        <div class="invoice-total"><span>Total Pembayaran</span><span id="orderTotal">Rp 0</span></div>
+        <div class="invoice-row"><span data-i18n="cart_shipping_label">Pengiriman</span><span>Rp 25.000</span></div>
+        <div class="invoice-total"><span data-i18n="cart_total_label">Total Pembayaran</span><span id="orderTotal">Rp 0</span></div>
       </div>
 
       <div class="d-flex gap-3 justify-content-center flex-wrap" style="animation:slideUp .5s ease .5s both;">
-        <a href="beranda.html" class="btn-main">Back to Home <i class="bi bi-house ms-1"></i></a>
-        <a href="produk.html" class="btn-outline-main">Continue Shopping <i class="bi bi-arrow-right ms-1"></i></a>
+        <a href="beranda.html" class="btn-main"><span data-i18n="btn_back_home">Kembali ke Beranda</span> <i class="bi bi-house ms-1"></i></a>
+        <a href="produk.html" class="btn-outline-main"><span data-i18n="btn_start_shopping">Lanjut Belanja</span> <i class="bi bi-arrow-right ms-1"></i></a>
       </div>
     </div>
   </div>
@@ -79,7 +79,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/app.js"></script>
 <script>
-// Generate confetti
 function launchConfetti(){
   var colors = ['#4F46E5','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899'];
   for(var i=0;i<40;i++){
@@ -99,12 +98,10 @@ function launchConfetti(){
   }
 }
 
-// Build dynamic invoice from cart
 document.addEventListener('DOMContentLoaded', function(){
   var cart = CartStore.get();
   var SHIPPING = 25000;
 
-  // Set order number
   var now = new Date();
   var orderNum = '#MYB-' + now.getFullYear() +
     String(now.getMonth()+1).padStart(2,'0') +
@@ -112,19 +109,19 @@ document.addEventListener('DOMContentLoaded', function(){
     String(Math.floor(Math.random()*999)+1).padStart(3,'0');
   document.getElementById('orderNumber').textContent = orderNum;
 
-  // Set date
   var months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
   document.getElementById('orderDate').textContent = now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
 
-  // Render products
   var productsEl = document.getElementById('orderProducts');
   if(cart.length > 0){
     var subtotal = 0;
     productsEl.innerHTML = cart.map(function(item){
+      var productRef = PRODUCTS.find(function(p){ return p.id === item.id; });
+      var pTrans = productRef ? I18nStore.getProduct(productRef) : item;
       var lineTotal = item.price * item.qty;
       subtotal += lineTotal;
       return '<div class="invoice-product-row">' +
-        '<span>' + item.name + ' &times; ' + item.qty + '</span>' +
+        '<span>' + pTrans.name + ' &times; ' + item.qty + '</span>' +
         '<span>' + formatRupiah(lineTotal) + '</span>' +
       '</div>';
     }).join('');
@@ -134,10 +131,7 @@ document.addEventListener('DOMContentLoaded', function(){
     document.getElementById('orderTotal').textContent = 'Rp 0';
   }
 
-  // Clear cart after showing invoice
   CartStore.clear();
-
-  // Launch confetti
   setTimeout(launchConfetti, 500);
 });
 </script>

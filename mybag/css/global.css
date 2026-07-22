@@ -228,6 +228,23 @@ img {
   border-radius: 20px;
 }
 
+.product-card .btn-main {
+  padding: 0.6rem 0.8rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  letter-spacing: -0.01em;
+  gap: 0.35rem !important;
+}
+
+@media (max-width: 576px) {
+  .product-card .btn-main {
+    padding: 0.5rem 0.4rem !important;
+    font-size: 0.72rem !important;
+    gap: 0.2rem !important;
+  }
+}
+
 /* ===== Toast Notifications ===== */
 .toast-container {
   position: fixed;

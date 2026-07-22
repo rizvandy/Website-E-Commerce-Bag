@@ -46,8 +46,8 @@
     <div class="login-box">
       <div class="form-box">
         <div class="brand-icon">M</div>
-        <h2 style="font-weight:700;font-size:1.8rem;text-align:center;margin-bottom:0.3rem;">Welcome Back</h2>
-        <p class="subtitle" style="text-align:center;margin-bottom:2rem;">Masuk untuk melanjutkan belanja Anda.</p>
+        <h2 style="font-weight:700;font-size:1.8rem;text-align:center;margin-bottom:0.3rem;" data-i18n="login_title">Selamat Datang Kembali</h2>
+        <p class="subtitle" style="text-align:center;margin-bottom:2rem;" data-i18n="login_subtitle">Masuk untuk melanjutkan belanja Anda.</p>
 
         <div class="social-login mb-3">
           <button type="button" aria-label="Login with Google"><i class="bi bi-google"></i></button>
@@ -55,28 +55,28 @@
           <button type="button" aria-label="Login with Apple"><i class="bi bi-apple"></i></button>
         </div>
 
-        <div class="divider">atau login dengan email</div>
+        <div class="divider" data-i18n="login_divider">atau masuk dengan email</div>
 
         <form id="loginForm" novalidate>
           <div class="mb-3">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="nama@email.com">
-            <div class="invalid-msg" id="emailError">Masukkan alamat email yang valid.</div>
+            <label for="email" data-i18n="form_email">Alamat Email</label>
+            <input type="email" class="form-control" id="email" placeholder="nama@email.com" data-i18n-placeholder="form_email_ph">
+            <div class="invalid-msg" id="emailError" data-i18n="err_email">Masukkan email yang valid.</div>
           </div>
           <div class="mb-3">
-            <label for="password">Password</label>
+            <label for="password" data-i18n="form_password">Password</label>
             <div class="password-wrap">
-              <input type="password" class="form-control" id="password" placeholder="Masukkan password">
+              <input type="password" class="form-control" id="password" placeholder="Masukkan password" data-i18n-placeholder="form_password_ph">
               <button type="button" class="toggle-pass" id="togglePass" aria-label="Toggle password"><i class="bi bi-eye"></i></button>
             </div>
             <div class="invalid-msg" id="passwordError">Password wajib diisi (min. 6 karakter).</div>
           </div>
           <div class="text-end mb-4">
-            <a href="#" class="forgot-link">Forgot Password?</a>
+            <a href="#" class="forgot-link" data-i18n="login_forgot">Lupa kata sandi?</a>
           </div>
-          <button type="submit" class="btn-main" style="width:100%;justify-content:center;">Login <i class="bi bi-arrow-right ms-1"></i></button>
+          <button type="submit" class="btn-main" style="width:100%;justify-content:center;"><span data-i18n="btn_sign_in">Masuk</span> <i class="bi bi-arrow-right ms-1"></i></button>
         </form>
-        <p class="register-text">Don't have an account? <a href="register.html">Register</a></p>
+        <p class="register-text"><span data-i18n="login_no_account">Belum punya akun?</span> <a href="register.html" data-i18n="login_register_link">Daftar sekarang</a></p>
       </div>
     </div>
   </div>
@@ -85,7 +85,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/app.js"></script>
 <script>
-// Login Form Validation
 var loginForm = document.getElementById('loginForm');
 var emailInput = document.getElementById('email');
 var passwordInput = document.getElementById('password');
@@ -99,7 +98,6 @@ function setError(input, errorEl, show){
   errorEl.style.display = show ? 'block' : 'none';
 }
 
-// Real-time clear errors on input
 emailInput.addEventListener('input', function(){
   if(emailInput.classList.contains('is-invalid') && emailInput.value.trim() && isValidEmail(emailInput.value.trim())){
     setError(emailInput, document.getElementById('emailError'), false);

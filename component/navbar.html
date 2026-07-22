@@ -1,90 +1,358 @@
 <style>
-/* Navbar */
-.navbar-custom{background:rgba(250,250,250,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);min-height:70px;box-shadow:0 1px 10px rgba(0,0,0,0.04);transition:all .3s ease;}
-.navbar-brand{font-weight:800;font-size:1.4rem;color:var(--primary)!important;letter-spacing:0.5px;}
-.nav-link{color:var(--text)!important;font-weight:500;position:relative;padding:0.5rem 0.2rem!important;margin:0 0.6rem;transition:color .3s ease;}
-.nav-link::after{content:'';position:absolute;left:0;bottom:0;width:0;height:2.5px;background:var(--primary);border-radius:2px;transition:width .3s cubic-bezier(0.4,0,0.2,1);}
-.nav-link:hover,.nav-link.active{color:var(--primary)!important;}
-.nav-link:hover::after,.nav-link.active::after{width:100%;}
-.icon-link{color:var(--text);font-size:1.2rem;transition:all .3s cubic-bezier(0.4,0,0.2,1);}
-.icon-link:hover{color:var(--primary);transform:translateY(-2px);}
-.cart-icon-wrap, .wishlist-icon-wrap{position:relative;}
-.cart-badge{position:absolute;top:-8px;right:-10px;background:var(--primary);color:#fff;font-size:0.6rem;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;font-weight:700;border:2px solid var(--bg);}
-.wishlist-badge{position:absolute;top:-8px;right:-10px;background:var(--danger);color:#fff;font-size:0.6rem;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;font-weight:700;border:2px solid var(--bg);}
-@media(max-width:991px){
-  .navbar-custom .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  /* Navbar */
+  .navbar-custom {
+    background: rgba(250, 250, 250, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    min-height: 70px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.04);
+    transition: all .3s ease;
   }
-  .navbar-toggler {
-    order: 1 !important;
-    margin-right: 0.4rem !important;
-    margin-left: 0 !important;
-    padding: 0.25rem 0.5rem !important;
-  }
+
   .navbar-brand {
-    order: 2 !important;
-    margin-right: auto !important;
-    margin-left: 0 !important;
-    font-size: 1.25rem !important;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--primary) !important;
+    letter-spacing: 0.5px;
   }
+
+  .nav-link {
+    color: var(--text) !important;
+    font-weight: 500;
+    position: relative;
+    padding: 0.5rem 0.2rem !important;
+    margin: 0 0.6rem;
+    transition: color .3s ease;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2.5px;
+    background: var(--primary);
+    border-radius: 2px;
+    transition: width .3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--primary) !important;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 100%;
+  }
+
+  /* Desktop layout centering & shifting icons to right */
+  @media (min-width: 992px) {
+    .navbar-custom .container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-brand {
+      position: relative;
+      z-index: 2;
+    }
+
+    .nav-icons {
+      position: relative;
+      z-index: 2;
+      margin-right: 0 !important;
+    }
+
+    .navbar-collapse {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      display: flex !important;
+      justify-content: center;
+    }
+
+    .drawer-header-mobile {
+      display: none !important;
+    }
+  }
+
+  /* Nav Icons Bar — Clean, Minimalist & Elegant */
   .nav-icons {
-    order: 3 !important;
-    margin-left: auto !important;
-    margin-right: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-end;
     gap: 0.65rem !important;
   }
-  .navbar-collapse{background:transparent;padding:0;margin:0;box-shadow:none;border:none;}
-  .navbar-nav {
-    background:var(--bg);
-    padding:1rem;
-    border-radius:16px;
-    margin-top:0.5rem;
-    box-shadow:0 10px 30px rgba(0,0,0,0.08);
-    align-items: center;
+
+  .icon-link {
+    color: var(--text);
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    line-height: 1;
+    position: relative;
   }
-  .navbar-custom { min-height: 60px; }
-  .icon-link { font-size: 1.05rem; }
-}
+
+  .icon-link:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+    transform: translateY(-2px);
+  }
+
+  .cart-icon-wrap,
+  .wishlist-icon-wrap {
+    position: relative;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .cart-badge,
+  .wishlist-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    font-size: 0.6rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    border: 2px solid var(--bg);
+    line-height: 1;
+    z-index: 2;
+  }
+
+  .cart-badge {
+    background: var(--primary);
+    color: #fff;
+  }
+
+  .wishlist-badge {
+    background: var(--danger);
+    color: #fff;
+  }
+
+  /* Language Switcher Badge Button — Clean Minimalist Pill */
+  .lang-toggle-btn {
+    background: var(--primary-light);
+    color: var(--primary);
+    border: none;
+    padding: 0 0.8rem;
+    height: 34px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all .3s ease;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.35rem;
+    line-height: 1;
+  }
+
+  .lang-toggle-btn:hover {
+    background: var(--primary);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+  }
+
+  /* Mobile Offcanvas Slide-in Drawer (from Left) */
+  @media(max-width:991px) {
+    .navbar-custom .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-toggler {
+      order: 1 !important;
+      margin-right: 0.4rem !important;
+      margin-left: 0 !important;
+      padding: 0.2rem 0.4rem !important;
+      border-radius: 8px;
+    }
+
+    .navbar-brand {
+      order: 2 !important;
+      margin-right: auto !important;
+      margin-left: 0.2rem !important;
+      font-size: 1.25rem !important;
+    }
+
+    .nav-icons {
+      order: 3 !important;
+      margin-left: auto !important;
+      margin-right: 0 !important;
+      gap: 0.35rem !important;
+    }
+
+    .navbar-custom {
+      min-height: 60px;
+    }
+
+    .icon-link {
+      width: 30px;
+      height: 30px;
+      font-size: 1rem;
+    }
+
+    .lang-toggle-btn {
+      height: 28px;
+      padding: 0 0.5rem;
+      font-size: 0.68rem;
+    }
+
+    /* Slide-in Drawer from Left */
+    .navbar-collapse {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      bottom: 0 !important;
+      width: 280px !important;
+      max-width: 80vw !important;
+      height: 100vh !important;
+      background: var(--bg) !important;
+      z-index: 10050 !important;
+      padding: 1.5rem !important;
+      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15) !important;
+      transform: translateX(-100%) !important;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      margin: 0 !important;
+    }
+
+    .navbar-collapse.show-drawer {
+      transform: translateX(0) !important;
+    }
+
+    .mobile-drawer-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 10040;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.35s ease;
+    }
+
+    .mobile-drawer-backdrop.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .drawer-header-mobile {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      width: 100%;
+    }
+
+    .drawer-close-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--text);
+      cursor: pointer;
+      padding: 0.2rem;
+      line-height: 1;
+    }
+
+    .navbar-nav {
+      background: transparent !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      align-items: flex-start !important;
+      width: 100% !important;
+      gap: 0.6rem !important;
+    }
+
+    .nav-link {
+      font-size: 1.05rem !important;
+      padding: 0.6rem 0 !important;
+      width: 100% !important;
+      text-align: left !important;
+    }
+  }
 </style>
 <nav class="navbar navbar-expand-lg fixed-top navbar-custom">
   <div class="container">
     <a class="navbar-brand" href="beranda.html">MyBag</a>
-    
-    <!-- Move nav-icons here so they are always visible in navbar on both desktop and mobile -->
-    <div class="d-flex align-items-center gap-3 nav-icons ms-auto me-3 order-lg-3">
+
+    <div class="d-flex align-items-center nav-icons ms-auto me-0 order-lg-3">
+      <button class="lang-toggle-btn" onclick="I18nStore.toggle();" aria-label="Switch Language"><i
+          class="bi bi-globe"></i><span class="lang-text">ID</span></button>
       <a href="#" class="icon-link search-trigger" aria-label="Search"><i class="bi bi-search"></i></a>
-      <a href="wishlist.html" class="icon-link wishlist-icon-wrap" aria-label="Wishlist"><i class="bi bi-heart"></i><span class="wishlist-badge" id="wishlistBadge">0</span></a>
-      <a href="keranjang-belanja.html" class="icon-link cart-icon-wrap" aria-label="Cart"><i class="bi bi-bag"></i><span class="cart-badge" id="cartBadge">0</span></a>
+      <a href="wishlist.html" class="icon-link wishlist-icon-wrap" aria-label="Wishlist"><i
+          class="bi bi-heart"></i><span class="wishlist-badge" id="wishlistBadge">0</span></a>
+      <a href="keranjang-belanja.html" class="icon-link cart-icon-wrap" aria-label="Cart"><i class="bi bi-bag"></i><span
+          class="cart-badge" id="cartBadge">0</span></a>
       <a href="login.html" class="icon-link" aria-label="Account"><i class="bi bi-person"></i></a>
     </div>
 
-    <button class="navbar-toggler order-lg-4" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-label="Toggle navigation">
+    <button class="navbar-toggler order-lg-4" type="button" aria-label="Toggle navigation" id="mobileMenuBtn">
       <span class="navbar-toggler-icon"></span>
     </button>
-    
+
     <div class="collapse navbar-collapse order-lg-2" id="navMenu">
+      <div class="drawer-header-mobile">
+        <a class="navbar-brand" href="beranda.html">MyBag</a>
+        <button type="button" class="drawer-close-btn" id="mobileMenuCloseBtn" aria-label="Close menu"><i
+            class="bi bi-x-lg"></i></button>
+      </div>
       <ul class="navbar-nav mx-auto gap-1">
-        <li class="nav-item"><a class="nav-link" href="beranda.html">Beranda</a></li>
-        <li class="nav-item"><a class="nav-link" href="produk.html">Produk</a></li>
-        <li class="nav-item"><a class="nav-link" href="tentang-kami.html">Tentang Kami</a></li>
-        <li class="nav-item"><a class="nav-link" href="kontak.html">Kontak</a></li>
+        <li class="nav-item"><a class="nav-link" href="beranda.html" data-i18n="nav_home">Beranda</a></li>
+        <li class="nav-item"><a class="nav-link" href="produk.html" data-i18n="nav_products">Produk</a></li>
+        <li class="nav-item"><a class="nav-link" href="tentang-kami.html" data-i18n="nav_about">Tentang Kami</a></li>
+        <li class="nav-item"><a class="nav-link" href="kontak.html" data-i18n="nav_contact">Kontak</a></li>
       </ul>
     </div>
   </div>
 </nav>
+
+<!-- Backdrop Overlay for Mobile Drawer -->
+<div class="mobile-drawer-backdrop" id="drawerBackdrop"></div>
 
 <!-- Search Overlay -->
 <div class="search-overlay" id="searchOverlay">
   <div class="search-overlay-content">
     <div class="search-header">
       <i class="bi bi-search" style="color:var(--text-secondary);font-size:1.1rem;"></i>
-      <input type="text" id="searchOverlayInput" placeholder="Cari produk...">
+      <input type="text" id="searchOverlayInput" placeholder="Cari produk..."
+        data-i18n-placeholder="search_placeholder">
       <button class="search-close-btn" id="searchCloseBtn" aria-label="Close search"><i class="bi bi-x-lg"></i></button>
     </div>
     <div class="search-results" id="searchResults">
-      <p class="search-hint"><i class="bi bi-search me-2"></i>Ketik untuk mencari produk...</p>
+      <p class="search-hint"><i class="bi bi-search me-2"></i><span data-i18n="search_hint">Ketik untuk mencari
+          produk...</span></p>
     </div>
   </div>
 </div>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Jelajahi koleksi tas kulit premium MyBag. Temukan tas travel, daily, dan premium yang sempurna untuk Anda.">
-<title>MyBag — Explore Collection</title>
+<title>MyBag — Jelajahi Koleksi</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,9 +24,6 @@
 .page-btn{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--border);background:#fff;color:var(--text);display:flex;align-items:center;justify-content:center;font-weight:500;transition:all .3s cubic-bezier(0.4,0,0.2,1);cursor:pointer;font-family:'Inter',sans-serif;}
 .page-btn.active,.page-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary);transform:translateY(-2px);box-shadow:0 4px 12px rgba(79,70,229,0.2);}
 
-/* Product grid transition */
-#productGrid .col-lg-3{animation:fadeUp .4s ease forwards;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 <body>
@@ -38,21 +35,21 @@
 <section class="section" style="padding-top:7rem;">
   <div class="container">
     <div class="text-center mb-5 reveal">
-      <p class="eyebrow">Koleksi Kami</p>
-      <h1 class="title">Explore Collection</h1>
-      <p class="subtitle">Temukan tas kulit premium yang sesuai dengan gaya perjalanan Anda.</p>
+      <p class="eyebrow" data-i18n="prod_eyebrow">Koleksi Kami</p>
+      <h1 class="title" data-i18n="prod_title">Jelajahi Koleksi</h1>
+      <p class="subtitle" data-i18n="prod_subtitle">Temukan tas kulit premium yang sesuai dengan gaya perjalanan Anda.</p>
     </div>
 
     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4 reveal">
       <div class="search-box">
         <i class="bi bi-search"></i>
-        <input type="text" id="searchInput" class="form-control" placeholder="Cari produk...">
+        <input type="text" id="searchInput" class="form-control" placeholder="Cari produk..." data-i18n-placeholder="search_placeholder">
       </div>
       <div class="d-flex flex-wrap gap-2" id="filterGroup">
-        <button class="filter-btn active" data-cat="all">All</button>
-        <button class="filter-btn" data-cat="travel">Travel</button>
-        <button class="filter-btn" data-cat="daily">Daily</button>
-        <button class="filter-btn" data-cat="premium">Premium</button>
+        <button class="filter-btn active" data-cat="all" data-i18n="filter_all">Semua</button>
+        <button class="filter-btn" data-cat="travel" data-i18n="filter_travel">Travel</button>
+        <button class="filter-btn" data-cat="daily" data-i18n="filter_daily">Harian</button>
+        <button class="filter-btn" data-cat="premium" data-i18n="filter_premium">Premium</button>
       </div>
     </div>
 
@@ -60,7 +57,7 @@
       <!-- Cards injected by JS -->
     </div>
 
-    <p class="text-center subtitle mt-4 d-none" id="noResults"><i class="bi bi-emoji-frown me-2"></i>Tidak ada produk yang cocok.</p>
+    <p class="text-center subtitle mt-4 d-none" id="noResults"><i class="bi bi-emoji-frown me-2"></i><span data-i18n="prod_no_results">Tidak ada produk yang cocok.</span></p>
 
     <!-- Pagination -->
     <div class="d-flex justify-content-center gap-2 mt-5" id="pagination"></div>
@@ -73,15 +70,16 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/app.js"></script>
 <script>
-// Use PRODUCTS from app.js
 var activeCat = 'all';
 var searchTerm = '';
 var currentPage = 1;
 var perPage = 4;
 
 function getFiltered(){
-  return PRODUCTS.filter(function(p){
-    var matchCat = activeCat === 'all' || p.cat === activeCat;
+  var translatedProducts = getTranslatedProducts();
+  return translatedProducts.filter(function(p){
+    var rawProd = PRODUCTS.find(function(x){ return x.id === p.id; });
+    var matchCat = activeCat === 'all' || (rawProd && rawProd.cat === activeCat);
     var matchSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                       p.cat.toLowerCase().includes(searchTerm.toLowerCase());
     return matchCat && matchSearch;
@@ -101,7 +99,7 @@ function render(){
 
   pageItems.forEach(function(p, i){
     var col = document.createElement('div');
-    col.className = 'col-6 col-md-6 col-lg-4';
+    col.className = 'col-6 col-md-6 col-lg-4 reveal revealed';
     col.style.animationDelay = (i * 0.08) + 's';
     col.innerHTML =
       '<div class="product-card">' +
@@ -109,14 +107,14 @@ function render(){
           '<div class="img-wrap">' +
             '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">' +
             '<button class="wishlist-quick-btn" data-wishlist-id="' + p.id + '" onclick="toggleWishlistProduct(' + p.id + ', event);"><i class="bi bi-heart"></i></button>' +
-            '<button class="quick-view-btn" onclick="showQuickView(' + p.id + ', event);"><i class="bi bi-eye"></i> Quick View</button>' +
+            '<button class="quick-view-btn" onclick="showQuickView(' + p.id + ', event);"><i class="bi bi-eye"></i> ' + I18nStore.t('btn_quick_view') + '</button>' +
           '</div>' +
         '</a>' +
         '<div class="body">' +
           '<p class="cat-tag mb-1">' + p.cat + '</p>' +
           '<h6 class="fw-semibold mb-1">' + p.name + '</h6>' +
           '<p class="price mb-2">' + formatRupiah(p.price) + '</p>' +
-          '<button class="btn-main w-100 justify-content-center" data-id="' + p.id + '">Add to Cart <i class="bi bi-bag-plus"></i></button>' +
+          '<button class="btn-main w-100 justify-content-center" data-id="' + p.id + '">' + I18nStore.t('btn_add_to_cart') + ' <i class="bi bi-bag-plus"></i></button>' +
         '</div>' +
       '</div>';
     grid.appendChild(col);
@@ -138,7 +136,6 @@ function renderPagination(totalPages){
   }
 }
 
-// Event delegation for Add to Cart
 document.getElementById('productGrid').addEventListener('click', function(e){
   var btn = e.target.closest('button[data-id]');
   if(!btn) return;
@@ -150,7 +147,6 @@ document.getElementById('productGrid').addEventListener('click', function(e){
   }
 });
 
-// Pagination clicks
 document.getElementById('pagination').addEventListener('click', function(e){
   var btn = e.target.closest('.page-btn');
   if(!btn) return;

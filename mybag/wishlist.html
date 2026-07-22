@@ -26,7 +26,7 @@
   justify-content: center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   cursor: pointer;
-  transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 10;
 }
 .wishlist-remove-btn:hover {
@@ -51,21 +51,6 @@
   font-size: 2.2rem;
   color: var(--danger);
 }
-
-/* Animation for items removal */
-.fade-out {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: all 0.3s ease;
-}
-
-#wishlistGrid .col-lg-4 {
-  animation: fadeUp .4s ease forwards;
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 </style>
 </head>
 <body>
@@ -76,9 +61,9 @@
 <!-- Wishlist Content -->
 <section class="section" style="padding-top:7rem; min-height: 75vh;">
   <div class="container">
-    <div class="text-center mb-5 reveal">
-      <p class="eyebrow">Pilihan Anda</p>
-      <h1 class="title">Wishlist Saya</h1>
+    <div class="text-center mb-5 reveal revealed">
+      <p class="eyebrow" data-i18n="wishlist_eyebrow">Pilihan Anda</p>
+      <h1 class="title" data-i18n="wishlist_title">Wishlist Saya</h1>
       <p class="subtitle" id="wishlistCount">0 item tersimpan</p>
     </div>
 
@@ -88,9 +73,9 @@
 
     <div id="emptyState" class="empty-state d-none">
       <div class="empty-icon"><i class="bi bi-heartbreak"></i></div>
-      <h5 class="fw-semibold mb-2">Wishlist Kosong</h5>
-      <p class="subtitle mb-3">Belum ada produk yang Anda tambahkan ke wishlist.</p>
-      <a href="produk.html" class="btn-outline-main">Mulai Cari Produk <i class="bi bi-arrow-right ms-1"></i></a>
+      <h5 class="fw-semibold mb-2" data-i18n="wishlist_empty_title">Wishlist Kosong</h5>
+      <p class="subtitle mb-3" data-i18n="wishlist_empty_desc">Belum ada produk yang Anda tambahkan ke wishlist.</p>
+      <a href="produk.html" class="btn-outline-main"><span data-i18n="btn_start_shopping">Mulai Cari Produk</span> <i class="bi bi-arrow-right ms-1"></i></a>
     </div>
   </div>
 </section>
@@ -107,8 +92,8 @@ function renderWishlist() {
   var emptyState = document.getElementById('emptyState');
   var countEl = document.getElementById('wishlistCount');
 
-  // Update badge count heading
-  countEl.textContent = wishlist.length + ' item' + (wishlist.length !== 1 ? 's' : '') + ' tersimpan';
+  var itemWord = wishlist.length > 1 ? I18nStore.t('wishlist_count_plural') : I18nStore.t('wishlist_count_singular');
+  countEl.textContent = wishlist.length + ' ' + itemWord;
 
   if (wishlist.length === 0) {
     grid.innerHTML = '';
@@ -116,20 +101,22 @@ function renderWishlist() {
   } else {
     emptyState.classList.add('d-none');
     grid.innerHTML = wishlist.map(function(p, i) {
-      return '<div class="col-6 col-md-6 col-lg-4" id="wishlist-item-' + p.id + '">' +
+      var productRef = PRODUCTS.find(function(item){ return item.id === p.id; });
+      var pTrans = productRef ? I18nStore.getProduct(productRef) : p;
+      return '<div class="col-6 col-md-6 col-lg-4 reveal revealed" id="wishlist-item-' + p.id + '">' +
         '<div class="product-card position-relative">' +
           '<button class="wishlist-remove-btn" data-id="' + p.id + '" aria-label="Hapus dari Wishlist">' +
             '<i class="bi bi-trash3"></i>' +
           '</button>' +
           '<a href="detail-produk.html?id=' + p.id + '">' +
-            '<div class="img-wrap"><img src="' + p.img + '" alt="' + p.name + '" loading="lazy"></div>' +
+            '<div class="img-wrap"><img src="' + p.img + '" alt="' + pTrans.name + '" loading="lazy"></div>' +
           '</a>' +
           '<div class="body">' +
-            '<p class="cat-tag mb-1">' + p.cat + '</p>' +
-            '<h6 class="fw-semibold mb-1">' + p.name + '</h6>' +
+            '<p class="cat-tag mb-1">' + pTrans.cat + '</p>' +
+            '<h6 class="fw-semibold mb-1">' + pTrans.name + '</h6>' +
             '<p class="price mb-2">' + formatRupiah(p.price) + '</p>' +
             '<button class="btn-main w-100 justify-content-center btn-add-cart" data-id="' + p.id + '">' +
-              'Add to Cart <i class="bi bi-bag-plus"></i>' +
+              I18nStore.t('btn_add_to_cart') + ' <i class="bi bi-bag-plus"></i>' +
             '</button>' +
           '</div>' +
         '</div>' +
@@ -138,40 +125,32 @@ function renderWishlist() {
   }
 }
 
-// Event Delegation for Wishlist Actions
 document.getElementById('wishlistGrid').addEventListener('click', function(e) {
-  // Handle Add to Cart
   var addBtn = e.target.closest('.btn-add-cart');
   if (addBtn) {
     var id = Number(addBtn.dataset.id);
     var product = PRODUCTS.find(function(p) { return p.id === id; });
     if (product) {
       CartStore.add(product);
+      triggerButtonFeedback(addBtn);
     }
     return;
   }
 
-  // Handle Remove from Wishlist
   var removeBtn = e.target.closest('.wishlist-remove-btn');
   if (removeBtn) {
     var removeId = Number(removeBtn.dataset.id);
     var productToRemove = PRODUCTS.find(function(p) { return p.id === removeId; });
     
-    // Add simple fade animation
-    var itemCol = document.getElementById('wishlist-item-' + removeId);
-    if (itemCol) {
-      itemCol.classList.add('fade-out');
-      setTimeout(function() {
-        WishlistStore.remove(removeId);
-        if (productToRemove) {
-          showToast(productToRemove.name + ' dihapus dari wishlist!', 'bi-heart', 'error');
-        }
-        renderWishlist();
-      }, 300);
+    // Instant removal without delay
+    WishlistStore.remove(removeId);
+    if (productToRemove) {
+      var pTrans = I18nStore.getProduct(productToRemove);
+      showToast(pTrans.name + ' ' + I18nStore.t('toast_removed_wishlist'), 'bi-heart', 'error');
     } else {
-      WishlistStore.remove(removeId);
-      renderWishlist();
+      showToast(I18nStore.t('toast_removed_wishlist'), 'bi-heart', 'error');
     }
+    renderWishlist();
   }
 });
 

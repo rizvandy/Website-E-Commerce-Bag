@@ -60,8 +60,8 @@
   <div class="container">
     <nav aria-label="breadcrumb" style="padding:1rem 0;">
       <ol class="breadcrumb mb-0" style="font-size:0.9rem;">
-        <li class="breadcrumb-item"><a href="beranda.html" style="color:var(--text-secondary);">Beranda</a></li>
-        <li class="breadcrumb-item"><a href="produk.html" style="color:var(--text-secondary);">Produk</a></li>
+        <li class="breadcrumb-item"><a href="beranda.html" style="color:var(--text-secondary);" data-i18n="nav_home">Beranda</a></li>
+        <li class="breadcrumb-item"><a href="produk.html" style="color:var(--text-secondary);" data-i18n="nav_products">Produk</a></li>
         <li class="breadcrumb-item active" id="breadcrumbName" aria-current="page" style="color:var(--primary);font-weight:500;">Detail</li>
       </ol>
     </nav>
@@ -72,13 +72,13 @@
 <section class="detail-section" style="padding-top:0;">
   <div class="container">
     <div class="row g-5">
-      <div class="col-lg-6 reveal-left">
+      <div class="col-lg-6 reveal-left revealed">
         <div class="product-gallery">
-          <span class="gallery-badge" id="productBadge">Premium</span>
+          <span class="gallery-badge" id="productBadge">PREMIUM</span>
           <img id="productImage" src="" alt="" loading="lazy">
         </div>
       </div>
-      <div class="col-lg-6 reveal-right">
+      <div class="col-lg-6 reveal-right revealed">
         <div class="product-info">
           <span class="cat-label" id="productCat"></span>
           <h1 id="productName"></h1>
@@ -86,7 +86,7 @@
           <p class="desc" id="productDesc"></p>
 
           <div class="d-flex align-items-center gap-3 mb-3">
-            <span style="font-weight:600;font-size:0.95rem;">Jumlah:</span>
+            <span style="font-weight:600;font-size:0.95rem;" data-i18n="detail_qty">Jumlah:</span>
             <div class="qty-selector">
               <button id="qtyMinus" aria-label="Kurangi">−</button>
               <span id="qtyValue">1</span>
@@ -96,7 +96,7 @@
 
           <div class="action-buttons">
             <button class="btn-main" id="addToCartBtn">
-              <i class="bi bi-bag-plus"></i> Add to Cart
+              <i class="bi bi-bag-plus"></i> <span data-i18n="btn_add_to_cart">Add to Cart</span>
             </button>
             <button class="wishlist-btn" id="wishlistBtn" aria-label="Add to Wishlist">
               <i class="bi bi-heart"></i>
@@ -104,11 +104,11 @@
           </div>
 
           <ul class="feature-list">
-            <li><i class="bi bi-check-circle-fill"></i> Kulit grade premium 100% asli</li>
-            <li><i class="bi bi-check-circle-fill"></i> Jahitan tangan oleh pengrajin berpengalaman</li>
-            <li><i class="bi bi-check-circle-fill"></i> Garansi kualitas 2 tahun</li>
-            <li><i class="bi bi-truck"></i> Gratis ongkir untuk pembelian di atas Rp 2.000.000</li>
-            <li><i class="bi bi-arrow-counterclockwise"></i> 30 hari pengembalian mudah</li>
+            <li><i class="bi bi-check-circle-fill"></i> <span data-i18n="detail_feat_1">Kulit grade premium 100% asli</span></li>
+            <li><i class="bi bi-check-circle-fill"></i> <span data-i18n="detail_feat_2">Jahitan tangan oleh pengrajin berpengalaman</span></li>
+            <li><i class="bi bi-check-circle-fill"></i> <span data-i18n="detail_feat_3">Garansi kualitas 2 tahun</span></li>
+            <li><i class="bi bi-truck"></i> <span data-i18n="detail_feat_4">Gratis ongkir untuk pembelian di atas Rp 2.000.000</span></li>
+            <li><i class="bi bi-arrow-counterclockwise"></i> <span data-i18n="detail_feat_5">30 hari pengembalian mudah</span></li>
           </ul>
         </div>
       </div>
@@ -119,9 +119,9 @@
 <!-- Related Products -->
 <section class="related-section section-bg">
   <div class="container">
-    <div class="text-center mb-5 reveal">
-      <p class="eyebrow">Produk Lainnya</p>
-      <h2 class="title">You May Also Like</h2>
+    <div class="text-center mb-5 reveal revealed">
+      <p class="eyebrow" data-i18n="related_eyebrow">Produk Lainnya</p>
+      <h2 class="title" data-i18n="related_title">You May Also Like</h2>
     </div>
     <div class="row g-4" id="relatedGrid"></div>
   </div>
@@ -136,66 +136,71 @@
 var qty = 1;
 var currentProduct = null;
 
-// Get product ID from URL
 var urlParams = new URLSearchParams(window.location.search);
 var productId = Number(urlParams.get('id')) || 1;
 
-document.addEventListener('DOMContentLoaded', function(){
-  // Find product
+function renderDetailPage() {
   currentProduct = PRODUCTS.find(function(p){ return p.id === productId; });
   if(!currentProduct) currentProduct = PRODUCTS[0];
+  var pTrans = I18nStore.getProduct(currentProduct);
 
-  // Populate detail
-  document.getElementById('productImage').src = currentProduct.img.replace('w=500', 'w=800');
-  document.getElementById('productImage').alt = currentProduct.name;
-  document.getElementById('productName').textContent = currentProduct.name;
-  document.getElementById('productPrice').textContent = formatRupiah(currentProduct.price);
-  document.getElementById('productDesc').textContent = currentProduct.desc;
-  document.getElementById('productCat').textContent = currentProduct.cat;
-  document.getElementById('breadcrumbName').textContent = currentProduct.name;
-  document.getElementById('productBadge').textContent = currentProduct.cat;
-  document.title = 'MyBag — ' + currentProduct.name;
+  document.getElementById('productImage').src = pTrans.img.replace('w=500', 'w=800');
+  document.getElementById('productImage').alt = pTrans.name;
+  document.getElementById('productName').textContent = pTrans.name;
+  document.getElementById('productPrice').textContent = formatRupiah(pTrans.price);
+  document.getElementById('productDesc').textContent = pTrans.desc;
+  document.getElementById('productCat').textContent = pTrans.cat;
+  document.getElementById('breadcrumbName').textContent = pTrans.name;
+  document.getElementById('productBadge').textContent = pTrans.cat;
+  document.title = 'MyBag — ' + pTrans.name;
 
-  // Set wishlist button state
   var wishlistBtn = document.getElementById('wishlistBtn');
   if(wishlistBtn && WishlistStore.has(currentProduct.id)){
     wishlistBtn.classList.add('active');
     wishlistBtn.querySelector('i').className = 'bi bi-heart-fill';
   }
 
-  // Related products (same category, exclude current)
   var related = PRODUCTS.filter(function(p){
     return p.id !== currentProduct.id;
   }).slice(0, 4);
 
   var relatedGrid = document.getElementById('relatedGrid');
+  relatedGrid.innerHTML = '';
   related.forEach(function(p, i){
+    var pRelTrans = I18nStore.getProduct(p);
     var col = document.createElement('div');
-    col.className = 'col-6 col-md-6 col-lg-3 reveal reveal-delay-' + (i + 1);
+    col.className = 'col-6 col-md-6 col-lg-3 reveal revealed reveal-delay-' + (i + 1);
     col.innerHTML =
       '<div class="product-card">' +
         '<a href="detail-produk.html?id=' + p.id + '">' +
           '<div class="img-wrap">' +
-            '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">' +
+            '<img src="' + pRelTrans.img + '" alt="' + pRelTrans.name + '" loading="lazy">' +
             '<button class="wishlist-quick-btn" data-wishlist-id="' + p.id + '" onclick="toggleWishlistProduct(' + p.id + ', event);"><i class="bi bi-heart"></i></button>' +
-            '<button class="quick-view-btn" onclick="showQuickView(' + p.id + ', event);"><i class="bi bi-eye"></i> Quick View</button>' +
+            '<button class="quick-view-btn" onclick="showQuickView(' + p.id + ', event);"><i class="bi bi-eye"></i> ' + I18nStore.t('btn_quick_view') + '</button>' +
           '</div>' +
         '</a>' +
         '<div class="body">' +
-          '<p class="cat-tag mb-1">' + p.cat + '</p>' +
-          '<h6 class="fw-semibold mb-1">' + p.name + '</h6>' +
-          '<p class="price mb-2">' + formatRupiah(p.price) + '</p>' +
-          '<button class="btn-main w-100 justify-content-center" data-id="' + p.id + '">Add to Cart <i class="bi bi-bag-plus"></i></button>' +
+          '<p class="cat-tag mb-1">' + pRelTrans.cat + '</p>' +
+          '<h6 class="fw-semibold mb-1">' + pRelTrans.name + '</h6>' +
+          '<p class="price mb-2">' + formatRupiah(pRelTrans.price) + '</p>' +
+          '<button class="btn-main w-100 justify-content-center" data-id="' + p.id + '">' + I18nStore.t('btn_add_to_cart') + ' <i class="bi bi-bag-plus"></i></button>' +
         '</div>' +
       '</div>';
     relatedGrid.appendChild(col);
   });
 
-  setTimeout(initScrollReveal, 150);
   updateWishlistButtons();
+}
+
+function render() {
+  renderDetailPage();
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  renderDetailPage();
+  setTimeout(initScrollReveal, 100);
 });
 
-// Quantity controls
 document.getElementById('qtyMinus').addEventListener('click', function(){
   if(qty > 1){
     qty--;
@@ -210,41 +215,40 @@ document.getElementById('qtyPlus').addEventListener('click', function(){
   }
 });
 
-// Add to Cart with proper quantity
 document.getElementById('addToCartBtn').addEventListener('click', function(){
   if(!currentProduct) return;
+  var pTrans = I18nStore.getProduct(currentProduct);
   var cart = CartStore.get();
   var existing = cart.find(function(item){ return item.id === currentProduct.id; });
   if(existing){
     existing.qty += qty;
   } else {
-    cart.push({ id: currentProduct.id, name: currentProduct.name, price: currentProduct.price, img: currentProduct.img, qty: qty });
+    cart.push({ id: currentProduct.id, name: pTrans.name, price: pTrans.price, img: pTrans.img, qty: qty });
   }
   CartStore.save(cart);
-  showToast(currentProduct.name + ' (' + qty + 'x) ditambahkan ke keranjang!', 'bi-bag-check-fill', 'success');
+  showToast(pTrans.name + ' (' + qty + 'x) ' + I18nStore.t('toast_added_cart'), 'bi-bag-check-fill', 'success');
   qty = 1;
   document.getElementById('qtyValue').textContent = '1';
   triggerButtonFeedback(this);
 });
 
-// Wishlist toggle
 document.getElementById('wishlistBtn').addEventListener('click', function(){
   if(!currentProduct) return;
+  var pTrans = I18nStore.getProduct(currentProduct);
   var added = WishlistStore.toggle(currentProduct);
   var icon = this.querySelector('i');
   if(added){
     this.classList.add('active');
     icon.className = 'bi bi-heart-fill';
-    showToast(currentProduct.name + ' ditambahkan ke wishlist!', 'bi-heart-fill', 'success');
+    showToast(pTrans.name + ' ' + I18nStore.t('toast_added_wishlist'), 'bi-heart-fill', 'success');
   } else {
     this.classList.remove('active');
     icon.className = 'bi bi-heart';
-    showToast(currentProduct.name + ' dihapus dari wishlist!', 'bi-heart', 'error');
+    showToast(pTrans.name + ' ' + I18nStore.t('toast_removed_wishlist'), 'bi-heart', 'error');
   }
   updateWishlistButtons();
 });
 
-// Related product add to cart (event delegation)
 document.getElementById('relatedGrid').addEventListener('click', function(e){
   var btn = e.target.closest('button[data-id]');
   if(!btn) return;

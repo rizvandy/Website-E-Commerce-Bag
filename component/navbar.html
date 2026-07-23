@@ -264,12 +264,29 @@
       transform: translateX(0) !important;
     }
 
-    /* Completely Remove Dark Dimming & Blur Backdrop Overlay */
+    /* Glassmorphic Backdrop (iOS / Apple Native UI Style) */
     .mobile-drawer-backdrop {
-      display: none !important;
-      pointer-events: none !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      background: rgba(0, 0, 0, 0.2) !important;
+      backdrop-filter: blur(4px) !important;
+      -webkit-backdrop-filter: blur(4px) !important;
+      z-index: 10040 !important;
       opacity: 0 !important;
       visibility: hidden !important;
+      pointer-events: none !important;
+      transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    .mobile-drawer-backdrop.active {
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
     }
 
     /* Drawer Header & Close Button Far Right with Red Click/Hover State */

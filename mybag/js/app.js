@@ -487,6 +487,36 @@ function renderHomeProducts() {
   if (!container) return;
 
   const products = getTranslatedProducts();
+
+  // Check if existing cards match — if so, update text only (no image flicker)
+  const existingCards = container.querySelectorAll('.product-card');
+  if (existingCards.length === products.length) {
+    let allMatch = true;
+    existingCards.forEach((card, i) => {
+      const btn = card.querySelector('button[data-id]');
+      if (!btn || Number(btn.dataset.id) !== products[i].id) allMatch = false;
+    });
+    if (allMatch) {
+      existingCards.forEach((card, i) => {
+        const p = products[i];
+        const catTag = card.querySelector('.cat-tag');
+        const nameEl = card.querySelector('h6');
+        const priceEl = card.querySelector('.price');
+        const cartBtn = card.querySelector('button[data-id]');
+        const imgEl = card.querySelector('img');
+        const quickViewBtn = card.querySelector('.quick-view-btn');
+        if (catTag) catTag.textContent = p.cat;
+        if (nameEl) nameEl.textContent = p.name;
+        if (priceEl) priceEl.textContent = formatRupiah(p.price);
+        if (cartBtn) cartBtn.innerHTML = I18nStore.t('btn_add_to_cart') + ' <i class="bi bi-bag-plus"></i>';
+        if (imgEl) imgEl.alt = p.name;
+        if (quickViewBtn) quickViewBtn.innerHTML = '<i class="bi bi-eye"></i> ' + I18nStore.t('btn_quick_view');
+      });
+      if (typeof updateWishlistButtons === 'function') updateWishlistButtons();
+      return;
+    }
+  }
+
   container.innerHTML = products.map((p, i) => {
     return `
       <div class="col-6 col-md-6 col-lg-4 reveal revealed" style="animation-delay:${i * 0.08}s;">

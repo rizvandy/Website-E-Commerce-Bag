@@ -23,6 +23,7 @@
     padding: 0.5rem 0.2rem !important;
     margin: 0 0.6rem;
     transition: color .3s ease;
+    white-space: nowrap;
   }
 
   .nav-link::after {
@@ -133,7 +134,7 @@
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    border: 2px solid var(--bg);
+    border: none;
     line-height: 1;
     z-index: 2;
   }
@@ -280,6 +281,11 @@
       margin-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
       width: 100%;
+    }
+
+    .drawer-header-mobile .navbar-brand {
+      margin-right: 0 !important;
+      order: unset !important;
     }
 
     .drawer-close-btn {

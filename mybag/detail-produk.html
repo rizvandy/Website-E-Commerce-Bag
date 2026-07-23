@@ -144,8 +144,12 @@ function renderDetailPage() {
   if(!currentProduct) currentProduct = PRODUCTS[0];
   var pTrans = I18nStore.getProduct(currentProduct);
 
-  document.getElementById('productImage').src = pTrans.img.replace('w=500', 'w=800');
-  document.getElementById('productImage').alt = pTrans.name;
+  // Only set image src on first load (avoid flicker on language switch)
+  var productImage = document.getElementById('productImage');
+  if (!productImage.src || productImage.src.indexOf(currentProduct.img.replace('../', '')) === -1) {
+    productImage.src = pTrans.img.replace('w=500', 'w=800');
+  }
+  productImage.alt = pTrans.name;
   document.getElementById('productName').textContent = pTrans.name;
   document.getElementById('productPrice').textContent = formatRupiah(pTrans.price);
   document.getElementById('productDesc').textContent = pTrans.desc;
@@ -165,6 +169,36 @@ function renderDetailPage() {
   }).slice(0, 4);
 
   var relatedGrid = document.getElementById('relatedGrid');
+
+  // Check if existing related cards match — update text only to avoid image flicker
+  var existingCards = relatedGrid.querySelectorAll('.product-card');
+  if (existingCards.length === related.length) {
+    var allMatch = true;
+    existingCards.forEach(function(card, i) {
+      var btn = card.querySelector('button[data-id]');
+      if (!btn || Number(btn.dataset.id) !== related[i].id) allMatch = false;
+    });
+    if (allMatch) {
+      existingCards.forEach(function(card, i) {
+        var pRelTrans = I18nStore.getProduct(related[i]);
+        var catTag = card.querySelector('.cat-tag');
+        var nameEl = card.querySelector('h6');
+        var priceEl = card.querySelector('.price');
+        var cartBtn = card.querySelector('button[data-id]');
+        var imgEl = card.querySelector('img');
+        var quickViewBtn = card.querySelector('.quick-view-btn');
+        if (catTag) catTag.textContent = pRelTrans.cat;
+        if (nameEl) nameEl.textContent = pRelTrans.name;
+        if (priceEl) priceEl.textContent = formatRupiah(pRelTrans.price);
+        if (cartBtn) cartBtn.innerHTML = I18nStore.t('btn_add_to_cart') + ' <i class="bi bi-bag-plus"></i>';
+        if (imgEl) imgEl.alt = pRelTrans.name;
+        if (quickViewBtn) quickViewBtn.innerHTML = '<i class="bi bi-eye"></i> ' + I18nStore.t('btn_quick_view');
+      });
+      updateWishlistButtons();
+      return;
+    }
+  }
+
   relatedGrid.innerHTML = '';
   related.forEach(function(p, i){
     var pRelTrans = I18nStore.getProduct(p);

@@ -94,8 +94,39 @@ function render(){
   var start = (currentPage - 1) * perPage;
   var pageItems = filtered.slice(start, start + perPage);
 
-  grid.innerHTML = '';
   document.getElementById('noResults').classList.toggle('d-none', filtered.length > 0);
+
+  // Check if existing cards match — update text only to avoid image flicker
+  var existingCards = grid.querySelectorAll('.product-card');
+  if (existingCards.length === pageItems.length) {
+    var allMatch = true;
+    existingCards.forEach(function(card, i) {
+      var btn = card.querySelector('button[data-id]');
+      if (!btn || Number(btn.dataset.id) !== pageItems[i].id) allMatch = false;
+    });
+    if (allMatch) {
+      existingCards.forEach(function(card, i) {
+        var p = pageItems[i];
+        var catTag = card.querySelector('.cat-tag');
+        var nameEl = card.querySelector('h6');
+        var priceEl = card.querySelector('.price');
+        var cartBtn = card.querySelector('button[data-id]');
+        var imgEl = card.querySelector('img');
+        var quickViewBtn = card.querySelector('.quick-view-btn');
+        if (catTag) catTag.textContent = p.cat;
+        if (nameEl) nameEl.textContent = p.name;
+        if (priceEl) priceEl.textContent = formatRupiah(p.price);
+        if (cartBtn) cartBtn.innerHTML = I18nStore.t('btn_add_to_cart') + ' <i class="bi bi-bag-plus"></i>';
+        if (imgEl) imgEl.alt = p.name;
+        if (quickViewBtn) quickViewBtn.innerHTML = '<i class="bi bi-eye"></i> ' + I18nStore.t('btn_quick_view');
+      });
+      renderPagination(totalPages);
+      updateWishlistButtons();
+      return;
+    }
+  }
+
+  grid.innerHTML = '';
 
   pageItems.forEach(function(p, i){
     var col = document.createElement('div');

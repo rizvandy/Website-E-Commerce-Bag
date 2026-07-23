@@ -119,6 +119,9 @@ const TRANSLATIONS = {
     err_email: "Masukkan email yang valid.",
     err_subject: "Subjek wajib diisi.",
     err_message: "Pesan wajib diisi.",
+    err_password: "Password wajib diisi (min. 6 karakter).",
+    err_confirm_password: "Password tidak cocok.",
+    err_terms: "Anda harus menyetujui syarat & ketentuan.",
     toast_contact_success: "Pesan berhasil dikirim! Kami akan segera menghubungi Anda.",
 
     // Keranjang Belanja
@@ -178,7 +181,13 @@ const TRANSLATIONS = {
     toast_added_wishlist: "ditambahkan ke wishlist!",
     toast_removed_cart: "dihapus dari keranjang!",
     toast_removed_wishlist: "dihapus dari wishlist!",
-    toast_newsletter_success: "Terima kasih! Anda berhasil berlangganan berita & promo MyBag."
+    toast_newsletter_success: "Terima kasih! Anda berhasil berlangganan berita & promo MyBag.",
+    toast_login_success: "Login berhasil! Mengarahkan...",
+    toast_register_success: "Registrasi berhasil! Silakan login.",
+    pass_weak: "Lemah",
+    pass_medium: "Sedang",
+    pass_good: "Baik",
+    pass_strong: "Kuat"
   },
   en: {
     // Nav
@@ -295,6 +304,9 @@ const TRANSLATIONS = {
     err_email: "Please enter a valid email address.",
     err_subject: "Subject is required.",
     err_message: "Message is required.",
+    err_password: "Password is required (min. 6 characters).",
+    err_confirm_password: "Passwords do not match.",
+    err_terms: "You must agree to the Terms & Conditions.",
     toast_contact_success: "Message sent successfully! We will contact you soon.",
 
     // Keranjang Belanja
@@ -354,7 +366,13 @@ const TRANSLATIONS = {
     toast_added_wishlist: "added to wishlist!",
     toast_removed_cart: "removed from cart!",
     toast_removed_wishlist: "removed from wishlist!",
-    toast_newsletter_success: "Thank you! You have successfully subscribed to MyBag newsletter & promos."
+    toast_newsletter_success: "Thank you! You have successfully subscribed to MyBag newsletter & promos.",
+    toast_login_success: "Login successful! Redirecting...",
+    toast_register_success: "Registration successful! Please login.",
+    pass_weak: "Weak",
+    pass_medium: "Medium",
+    pass_good: "Good",
+    pass_strong: "Strong"
   }
 };
 
@@ -420,8 +438,11 @@ const I18nStore = {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (dict[key]) {
+        const span = el.querySelector('span:not(.badge)');
         const icon = el.querySelector('i');
-        if (icon) {
+        if (span) {
+          span.textContent = dict[key];
+        } else if (icon) {
           el.childNodes.forEach(child => {
             if (child.nodeType === Node.TEXT_NODE && child.textContent.trim()) {
               child.textContent = ' ' + dict[key] + ' ';
@@ -885,9 +906,9 @@ function initScrollTop() {
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 300) {
-      btn.classList.add('show');
+      btn.classList.add('visible');
     } else {
-      btn.classList.remove('show');
+      btn.classList.remove('visible');
     }
   });
 

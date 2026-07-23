@@ -69,7 +69,7 @@
               <input type="password" class="form-control" id="password" placeholder="Masukkan password" data-i18n-placeholder="form_password_ph">
               <button type="button" class="toggle-pass" id="togglePass" aria-label="Toggle password"><i class="bi bi-eye"></i></button>
             </div>
-            <div class="invalid-msg" id="passwordError">Password wajib diisi (min. 6 karakter).</div>
+            <div class="invalid-msg" id="passwordError" data-i18n="err_password">Password wajib diisi (min. 6 karakter).</div>
           </div>
           <div class="text-end mb-4">
             <a href="#" class="forgot-link" data-i18n="login_forgot">Lupa kata sandi?</a>
@@ -128,7 +128,7 @@ loginForm.addEventListener('submit', function(e){
   }
 
   if(valid){
-    showToast('Login berhasil! Mengarahkan...', 'bi-check-circle-fill', 'success');
+    showToast(I18nStore.t('toast_login_success'), 'bi-check-circle-fill', 'success');
     setTimeout(function(){ window.location.href = 'beranda.html'; }, 1500);
   }
 });

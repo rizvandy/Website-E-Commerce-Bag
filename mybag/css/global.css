@@ -582,7 +582,8 @@ input::-webkit-credentials-auto-fill-button {
 
 .password-wrap .form-control {
   padding-right: 3rem !important;
-  /* Make room for the eye icon */
+  background-image: none !important;
+  /* Make room for the eye icon and prevent icon collision */
 }
 
 .toggle-pass {
@@ -625,7 +626,7 @@ input::-webkit-credentials-auto-fill-button {
   border: 1.5px solid var(--border);
   padding: 0.7rem 1rem;
   font-family: 'Inter', sans-serif;
-  transition: all .3s ease;
+  transition: border-color .3s ease, box-shadow .3s ease;
 }
 
 .form-box .form-control:focus {
@@ -635,6 +636,13 @@ input::-webkit-credentials-auto-fill-button {
 
 .form-box .form-control.is-invalid {
   border-color: var(--danger);
+  animation: shakeInput 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes shakeInput {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-3px); }
+  40%, 80% { transform: translateX(3px); }
 }
 
 .invalid-msg {
@@ -642,6 +650,22 @@ input::-webkit-credentials-auto-fill-button {
   font-size: 0.8rem;
   margin-top: 0.3rem;
   display: none;
+}
+
+.invalid-msg[style*="display: block"],
+.invalid-msg[style*="display:block"] {
+  animation: fadeInMsg 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInMsg {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ===== Responsive ===== */

@@ -76,7 +76,7 @@
               <input type="password" class="form-control" id="regPassword" placeholder="Buat password (min. 6 karakter)" data-i18n-placeholder="reg_pass_ph">
               <button type="button" class="toggle-pass" id="togglePass1" aria-label="Toggle password"><i class="bi bi-eye"></i></button>
             </div>
-            <div class="invalid-msg" id="regPasswordError">Password minimal 6 karakter.</div>
+            <div class="invalid-msg" id="regPasswordError" data-i18n="err_password">Password wajib diisi (min. 6 karakter).</div>
             <div class="password-strength"><div class="bar" id="strengthBar"></div></div>
             <div class="strength-text" id="strengthText"></div>
           </div>
@@ -86,13 +86,13 @@
               <input type="password" class="form-control" id="regConfirm" placeholder="Ulangi password" data-i18n-placeholder="reg_confirm_pass_ph">
               <button type="button" class="toggle-pass" id="togglePass2" aria-label="Toggle password"><i class="bi bi-eye"></i></button>
             </div>
-            <div class="invalid-msg" id="regConfirmError">Password tidak cocok.</div>
+            <div class="invalid-msg" id="regConfirmError" data-i18n="err_confirm_password">Password tidak cocok.</div>
           </div>
           <div class="terms-check mb-4">
             <input type="checkbox" id="termsCheck">
             <label for="termsCheck" data-i18n="reg_agree">Saya setuju dengan Syarat & Ketentuan serta Kebijakan Privasi</label>
           </div>
-          <div class="invalid-msg mb-3" id="termsError" style="text-align:center;">Anda harus menyetujui syarat & ketentuan.</div>
+          <div class="invalid-msg mb-3" id="termsError" style="text-align:center;" data-i18n="err_terms">Anda harus menyetujui syarat & ketentuan.</div>
           <button type="submit" class="btn-main" style="width:100%;justify-content:center;"><span data-i18n="btn_sign_up">Create Account</span> <i class="bi bi-arrow-right ms-1"></i></button>
         </form>
         <p class="login-text"><span data-i18n="reg_has_account">Already have an account?</span> <a href="login.html" data-i18n="reg_login_link">Login</a></p>
@@ -131,11 +131,17 @@ regPassword.addEventListener('input', function(){
 
   var width = (score / 5) * 100;
   var color = score <= 1 ? 'var(--danger)' : score <= 2 ? '#F59E0B' : score <= 3 ? '#F59E0B' : 'var(--success)';
-  var text = score <= 1 ? 'Lemah' : score <= 2 ? 'Sedang' : score <= 3 ? 'Baik' : 'Kuat';
+  var key = score <= 1 ? 'pass_weak' : score <= 2 ? 'pass_medium' : score <= 3 ? 'pass_good' : 'pass_strong';
 
   strengthBar.style.width = width + '%';
   strengthBar.style.background = color;
-  strengthText.textContent = val.length > 0 ? text : '';
+  if (val.length > 0) {
+    strengthText.setAttribute('data-i18n', key);
+    strengthText.textContent = I18nStore.t(key);
+  } else {
+    strengthText.removeAttribute('data-i18n');
+    strengthText.textContent = '';
+  }
   strengthText.style.color = color;
 
   if(regPassword.classList.contains('is-invalid') && val.length >= 6){
@@ -185,7 +191,7 @@ regForm.addEventListener('submit', function(e){
   } else { document.getElementById('termsError').style.display = 'none'; }
 
   if(valid){
-    showToast('Registrasi berhasil! Silakan login.', 'bi-check-circle-fill', 'success');
+    showToast(I18nStore.t('toast_register_success'), 'bi-check-circle-fill', 'success');
     setTimeout(function(){ window.location.href = 'login.html'; }, 1500);
   }
 });

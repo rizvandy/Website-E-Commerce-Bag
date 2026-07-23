@@ -1,107 +1,48 @@
 <style>
-  /* Footer - Refined Opsi C Style Layout */
+  /* Footer - Modern Clean Centered Layout */
   .footer {
     background: var(--bg-section);
-    padding: 4.5rem 0 2rem;
+    padding: 3.5rem 0 2rem;
     border-top: 1px solid var(--border);
     color: var(--text);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
   }
 
   .footer-logo {
     font-weight: 800;
     color: var(--primary);
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     letter-spacing: -0.02em;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.4rem;
   }
 
-  .footer-text {
+  .footer-tagline {
     color: var(--text-secondary);
     font-size: 0.88rem;
-    line-height: 1.65;
-    max-width: 340px;
-  }
-
-  .footer-title {
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    font-size: 0.78rem;
-    color: var(--text-secondary);
+    line-height: 1.6;
     margin-bottom: 1.2rem;
-  }
-
-  .footer-links {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 0;
-  }
-
-  .footer-links li {
-    margin-bottom: 0.65rem;
-    color: var(--text);
-    font-size: 0.9rem;
-    font-weight: 500;
-    display: flex;
-    align-items: flex-start;
-  }
-
-  .footer-links li i {
-    color: var(--primary);
-    font-size: 1.05rem;
-    margin-right: 0.7rem;
-    flex-shrink: 0;
-    margin-top: 0.1rem;
-  }
-
-  .footer-links a {
-    color: var(--text);
-    font-weight: 500;
-    transition: all .25s ease;
-    text-decoration: none;
-  }
-
-  .footer-links a:hover {
-    color: var(--primary);
-    padding-left: 4px;
-  }
-
-  .newsletter-form {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.8rem;
-  }
-
-  .newsletter-form .form-control {
-    border-radius: 50px;
-    border: 1.5px solid var(--border);
-    font-size: 0.88rem;
-    font-family: 'Inter', sans-serif;
-    padding: 0.6rem 1.1rem;
-  }
-
-  .newsletter-form .form-control:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-  }
-
-  .newsletter-form .btn-main {
-    padding: 0.6rem 1.1rem;
-    border-radius: 50px;
-    width: auto;
-    flex-shrink: 0;
+    max-width: 480px;
   }
 
   .footer-social-bar {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.75rem;
-    margin-top: 1.2rem;
+    margin-bottom: 1.8rem;
   }
 
   .footer-social-bar a {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     background: #fff;
     border: 1px solid var(--border);
@@ -121,15 +62,82 @@
     transform: translateY(-2px);
   }
 
-  /* Bottom Bar - Legal links Left, Copyright Right */
+  .footer-nav-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.8rem;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.8rem 0;
+  }
+
+  .footer-nav-list a {
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.92rem;
+    transition: color .25s ease;
+    text-decoration: none;
+  }
+
+  .footer-nav-list a:hover {
+    color: var(--primary);
+  }
+
+  .footer-newsletter-wrap {
+    width: 100%;
+    max-width: 420px;
+    margin-bottom: 2rem;
+  }
+
+  .footer-newsletter-hint {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.6rem;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .newsletter-form .form-control {
+    border-radius: 50px;
+    border: 1.5px solid var(--border);
+    font-size: 0.88rem;
+    font-family: 'Inter', sans-serif;
+    padding: 0.6rem 1.1rem;
+    background: #ffffff;
+  }
+
+  .newsletter-form .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  }
+
+  .newsletter-form .btn-main {
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  .footer-divider {
+    width: 100%;
+    border: none;
+    border-top: 1px solid var(--border);
+    opacity: 0.7;
+    margin: 0 0 1.5rem 0;
+  }
+
   .footer-bottom-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
     flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    padding-top: 0.5rem;
+    gap: 0.8rem;
   }
 
   .footer-bottom-text {
@@ -138,161 +146,89 @@
     margin-bottom: 0;
   }
 
+  .footer-legal-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
+
   .footer-legal-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
     transition: color .25s ease;
   }
 
   .footer-legal-links a:hover {
-    color: var(--primary) !important;
+    color: var(--primary);
   }
 
-  /* Clean, Minimalist Layout for Mobile */
   @media (max-width: 768px) {
     .footer {
-      padding: 2rem 0 1.5rem;
+      padding: 2.5rem 0 1.5rem;
     }
 
-    .footer .row.gy-4 {
-      --bs-gutter-y: 1.2rem;
-    }
-
-    .footer-logo {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .footer-text {
-      max-width: 100%;
-      font-size: 0.82rem;
-      line-height: 1.55;
-      margin-bottom: 0.4rem !important;
-    }
-
-    .footer-title {
-      margin-bottom: 0.7rem;
-      font-size: 0.72rem;
-      letter-spacing: 1px;
-    }
-
-    .footer-links li {
-      margin-bottom: 0.4rem;
-      font-size: 0.84rem;
-    }
-
-    .footer-social-bar {
-      justify-content: flex-start;
-      margin-top: 0.6rem;
-      margin-bottom: 0;
-      gap: 0.5rem;
-    }
-
-    .footer-social-bar a {
-      width: 32px;
-      height: 32px;
-      font-size: 0.85rem;
-    }
-
-    /* Force Navigasi & Kontak side-by-side on small screens */
-    .footer .col-lg-2,
-    .footer .col-lg-3.col-sm-6 {
-      flex: 0 0 50%;
-      max-width: 50%;
-    }
-
-    /* Newsletter compact */
-    .newsletter-form {
-      margin-top: 0.5rem;
-    }
-
-    .newsletter-form .form-control {
-      font-size: 0.82rem;
-      padding: 0.5rem 0.9rem;
-    }
-
-    .footer hr {
-      margin-top: 1.2rem !important;
-      margin-bottom: 1rem !important;
+    .footer-nav-list {
+      gap: 1rem;
+      font-size: 0.88rem;
     }
 
     .footer-bottom-bar {
       flex-direction: column;
       text-align: center;
-      gap: 0.5rem;
-      margin-top: 0;
-      padding-top: 0;
+      gap: 0.6rem;
     }
 
     .footer-legal-links {
       justify-content: center;
-      gap: 0.6rem;
-      font-size: 0.8rem;
-    }
-
-    .footer-bottom-text {
-      font-size: 0.78rem;
     }
   }
 </style>
+
 <footer class="footer">
   <div class="container">
-    <div class="row gy-4 gx-lg-5">
-      <!-- Brand Section with Social Media below Tagline -->
-      <div class="col-lg-4 col-md-12 col-12">
-        <h5 class="footer-logo">MyBag</h5>
-        <p class="footer-text mb-2" data-i18n="footer_tagline">Tas kulit premium yang dibuat untuk para penjelajah modern.
-          Dirancang untuk bertahan, dibuat untuk menginspirasi.</p>
-        <div class="footer-social-bar">
-          <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
-          <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
-        </div>
+    <div class="footer-inner">
+      <!-- Brand & Tagline -->
+      <h5 class="footer-logo">MyBag</h5>
+      <p class="footer-tagline" data-i18n="footer_tagline">Tas kulit premium yang dibuat untuk para penjelajah modern. Dirancang untuk bertahan, dibuat untuk menginspirasi.</p>
+
+      <!-- Social Media -->
+      <div class="footer-social-bar">
+        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
       </div>
 
-      <!-- Navigasi -->
-      <div class="col-lg-2 col-md-4 col-12 col-sm-6">
-        <h6 class="footer-title" data-i18n="footer_nav">NAVIGASI</h6>
-        <ul class="footer-links">
-          <li><a href="beranda.html" data-i18n="nav_home">Beranda</a></li>
-          <li><a href="produk.html" data-i18n="nav_products">Produk</a></li>
-          <li><a href="tentang-kami.html" data-i18n="nav_about">Tentang Kami</a></li>
-          <li><a href="kontak.html" data-i18n="nav_contact">Kontak</a></li>
-        </ul>
-      </div>
-
-      <!-- Kontak -->
-      <div class="col-lg-3 col-md-4 col-12 col-sm-6">
-        <h6 class="footer-title" data-i18n="footer_contact">KONTAK</h6>
-        <ul class="footer-links">
-          <li><i class="bi bi-geo-alt"></i><span data-i18n="contact_addr_val">Jl. Puncak Indah, Surabaya, Indonesia</span></li>
-          <li><i class="bi bi-envelope"></i><span>hello@mybag.com</span></li>
-          <li><i class="bi bi-telephone"></i><span>+62 812 3456 7890</span></li>
-        </ul>
-      </div>
+      <!-- Quick Links -->
+      <ul class="footer-nav-list">
+        <li><a href="beranda.html" data-i18n="nav_home">Beranda</a></li>
+        <li><a href="produk.html" data-i18n="nav_products">Produk</a></li>
+        <li><a href="tentang-kami.html" data-i18n="nav_about">Tentang Kami</a></li>
+        <li><a href="kontak.html" data-i18n="nav_contact">Kontak</a></li>
+      </ul>
 
       <!-- Newsletter -->
-      <div class="col-lg-3 col-md-4 col-12">
-        <h6 class="footer-title" data-i18n="footer_newsletter">BERITA & PROMO</h6>
-        <p class="footer-text mb-2" data-i18n="footer_newsletter_hint">Dapatkan info koleksi terbaru.</p>
+      <div class="footer-newsletter-wrap">
+        <p class="footer-newsletter-hint" data-i18n="footer_newsletter_hint">Dapatkan info koleksi terbaru.</p>
         <form class="newsletter-form" id="newsletterForm" onsubmit="return handleNewsletterSubmit(event);">
           <input type="email" id="newsletterEmail" class="form-control" placeholder="Email Anda"
             data-i18n-placeholder="footer_email_placeholder" required>
           <button class="btn-main" type="submit" aria-label="Kirim"><i class="bi bi-send"></i></button>
         </form>
       </div>
-    </div>
 
-    <!-- Divider Line -->
-    <hr class="my-4" style="border-color:var(--border); opacity:0.7;">
+      <hr class="footer-divider">
 
-    <!-- Bottom Bar (Legal Links Left, Copyright Right) -->
-    <div class="footer-bottom-bar">
-      <div class="footer-legal-links d-flex align-items-center gap-3" style="font-size:0.85rem;">
-        <a href="#" style="color:var(--text-secondary);text-decoration:none;" data-i18n="footer_terms">Syarat & Ketentuan</a>
-        <span style="color:var(--border);">|</span>
-        <a href="#" style="color:var(--text-secondary);text-decoration:none;" data-i18n="footer_privacy">Kebijakan Privasi</a>
+      <!-- Bottom Bar -->
+      <div class="footer-bottom-bar">
+        <p class="footer-bottom-text" data-i18n="footer_copyright">&copy; 2026 MyBag. Hak Cipta Dilindungi.</p>
+        <div class="footer-legal-links">
+          <a href="#" data-i18n="footer_terms">Syarat & Ketentuan</a>
+          <span style="color:var(--border);">|</span>
+          <a href="#" data-i18n="footer_privacy">Kebijakan Privasi</a>
+        </div>
       </div>
-      <p class="footer-bottom-text" data-i18n="footer_copyright">&copy; 2026 MyBag. Hak Cipta Dilindungi.</p>
     </div>
   </div>
 </footer>

@@ -175,6 +175,8 @@ const TRANSLATIONS = {
     success_order_id: "ID Pesanan:",
     success_est_delivery: "Estimasi Pengiriman: 2 - 4 Hari Kerja",
     success_summary_title: "Rincian Pesanan",
+    invoice_date: "Tanggal",
+    invoice_paid: "Terbayar",
 
     // Toasts
     toast_added_cart: "ditambahkan ke keranjang!",
@@ -360,6 +362,8 @@ const TRANSLATIONS = {
     success_order_id: "Order ID:",
     success_est_delivery: "Estimated Delivery: 2 - 4 Working Days",
     success_summary_title: "Order Breakdown",
+    invoice_date: "Date",
+    invoice_paid: "Paid",
 
     // Toasts
     toast_added_cart: "added to cart!",
@@ -380,7 +384,9 @@ const TRANSLATIONS = {
 const PRODUCTS_DATA_EN = {
   1: { name: 'Classic Tote', desc: 'Classic leather tote bag. Perfect for daily activities.' },
   2: { name: 'Heritage Backpack', desc: 'Heritage leather backpack with timeless design. Ideal for adventure and work.' },
-  3: { name: 'Slim Crossbody', desc: 'Sleek and elegant crossbody bag. Compact yet spacious for your essentials.' }
+  3: { name: 'Slim Crossbody', desc: 'Sleek and elegant crossbody bag. Compact yet spacious for your essentials.' },
+  4: { name: 'Eiger Adventure Pack', desc: 'Rugged adventure backpack built for the outdoors. Water-resistant with ergonomic design for maximum comfort on the trail.' },
+  5: { name: 'President Executive', desc: 'Premium executive backpack for the modern professional. Spacious compartments with refined leather details.' }
 };
 
 // ===== i18n Store Engine =====
@@ -495,6 +501,8 @@ const PRODUCTS = [
   {id:1, name:'Classic Tote', price:1250000, cat:'daily', img:'../assets/images/Hand Bag depan.png', desc:'Tote bag klasik dari kulit pilihan. Sempurna untuk aktivitas sehari-hari.'},
   {id:2, name:'Heritage Backpack', price:2100000, cat:'travel', img:'../assets/images/Ransel Bag depan.png', desc:'Ransel kulit warisan dengan desain timeless. Ideal untuk petualangan dan kerja.'},
   {id:3, name:'Slim Crossbody', price:980000, cat:'daily', img:'../assets/images/Sling Bag depan.png', desc:'Tas selempang ramping dan elegan. Ringkas namun cukup untuk essentials Anda.'},
+  {id:4, name:'Eiger Adventure Pack', price:1850000, cat:'travel', img:'../assets/images/Eiger Ransel.png', desc:'Ransel petualangan tangguh untuk aktivitas outdoor. Tahan air dengan desain ergonomis untuk kenyamanan maksimal di medan berat.'},
+  {id:5, name:'President Executive', price:2750000, cat:'premium', img:'../assets/images/President Ransel.png', desc:'Ransel eksekutif premium untuk profesional modern. Kompartemen luas dengan detail kulit elegan.'},
 ];
 
 // Helper to get translated products
@@ -507,7 +515,7 @@ function renderHomeProducts() {
   const container = document.getElementById('homeProductGrid');
   if (!container) return;
 
-  const products = getTranslatedProducts();
+  const products = getTranslatedProducts().slice(0, 3);
 
   // Check if existing cards match — if so, update text only (no image flicker)
   const existingCards = container.querySelectorAll('.product-card');
@@ -725,49 +733,36 @@ function toggleWishlistProduct(id, event) {
 
 // ===== Toast Notification System =====
 function showToast(message, iconClass = 'bi-check-circle-fill', type = 'success') {
-  let container = document.getElementById('toastContainer');
+  let container = document.querySelector('.toast-container');
   if (!container) {
     container = document.createElement('div');
-    container.id = 'toastContainer';
-    container.className = 'toast-container position-fixed bottom-0 end-0 p-3';
-    container.style.zIndex = '9999';
+    container.className = 'toast-container';
     document.body.appendChild(container);
   }
 
-  const toastId = 'toast_' + Date.now();
-  const bgClass = type === 'error' ? 'bg-danger text-white' : type === 'info' ? 'bg-info text-white' : 'bg-dark text-white';
-  
-  const toastHtml = `
-    <div id="${toastId}" class="toast align-items-center ${bgClass} border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true" style="border-radius:12px;">
-      <div class="d-flex">
-        <div class="toast-body d-flex align-items-center gap-2" style="font-size:0.9rem;font-weight:500;">
-          <i class="bi ${iconClass} fs-5"></i>
-          <span>${message}</span>
-        </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-    </div>
-  `;
+  var toast = document.createElement('div');
+  toast.className = 'toast-item ' + type;
+  toast.setAttribute('role', 'alert');
+  toast.innerHTML = '<i class="bi ' + iconClass + '"></i><span>' + message + '</span>';
+  container.appendChild(toast);
 
-  container.insertAdjacentHTML('beforeend', toastHtml);
-  const toastEl = document.getElementById(toastId);
-  const bsToast = new bootstrap.Toast(toastEl, { delay: 2800 });
-  bsToast.show();
-
-  toastEl.addEventListener('hidden.bs.toast', () => {
-    toastEl.remove();
-  });
+  setTimeout(function() {
+    toast.classList.add('toast-out');
+    toast.addEventListener('animationend', function() {
+      toast.remove();
+    });
+  }, 2800);
 }
 
 // ===== Button Feedback Animation =====
 function triggerButtonFeedback(btn) {
   if (!btn) return;
   const originalHtml = btn.innerHTML;
-  btn.classList.add('btn-feedback-active');
+  btn.classList.add('btn-success-feedback');
   btn.innerHTML = '<i class="bi bi-check2"></i> ' + I18nStore.t('btn_added');
   setTimeout(() => {
     btn.innerHTML = originalHtml;
-    btn.classList.remove('btn-feedback-active');
+    btn.classList.remove('btn-success-feedback');
   }, 1200);
 }
 

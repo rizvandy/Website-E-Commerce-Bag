@@ -147,7 +147,7 @@ function renderDetailPage() {
   // Only set image src on first load (avoid flicker on language switch)
   var productImage = document.getElementById('productImage');
   if (!productImage.src || productImage.src.indexOf(currentProduct.img.replace('../', '')) === -1) {
-    productImage.src = pTrans.img.replace('w=500', 'w=800');
+    productImage.src = pTrans.img;
   }
   productImage.alt = pTrans.name;
   document.getElementById('productName').textContent = pTrans.name;

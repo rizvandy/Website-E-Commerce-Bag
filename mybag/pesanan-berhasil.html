@@ -54,10 +54,10 @@
       <div class="invoice-card" id="invoiceCard">
         <div class="invoice-header">
           <h5 data-i18n="success_summary_title">Invoice</h5>
-          <span class="invoice-status"><i class="bi bi-check-circle me-1"></i>Paid</span>
+          <span class="invoice-status" data-i18n="invoice_paid"><i class="bi bi-check-circle me-1"></i>Terbayar</span>
         </div>
         <div class="invoice-row"><span data-i18n="success_order_id">ID Pesanan:</span><span id="orderNumber">#MYB-20260714-001</span></div>
-        <div class="invoice-row"><span>Tanggal</span><span id="orderDate"></span></div>
+        <div class="invoice-row"><span data-i18n="invoice_date">Tanggal</span><span id="orderDate"></span></div>
         <div class="invoice-products" id="orderProducts">
           <!-- Dynamic products -->
         </div>
@@ -109,7 +109,9 @@ document.addEventListener('DOMContentLoaded', function(){
     String(Math.floor(Math.random()*999)+1).padStart(3,'0');
   document.getElementById('orderNumber').textContent = orderNum;
 
-  var months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  var monthsId = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  var monthsEn = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var months = I18nStore.getLang() === 'en' ? monthsEn : monthsId;
   document.getElementById('orderDate').textContent = now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
 
   var productsEl = document.getElementById('orderProducts');
